@@ -1,0 +1,160 @@
+  h1 {
+    color: rgb(224, 223, 223);
+    font-size: 30px;
+    font-weight: 400;
+  }
+   h2 {
+      margin: 20px 0px 10px 0px;
+  }
+
+  a{
+      color: rgb(240, 140, 0);
+  }
+    a:hover{
+      color: rgb(252, 189, 102);
+      text-decoration: none;
+  }
+
+/* adjust navbar hight */
+  .navbar-expand-lg{
+   padding:15px 20px 15px 35px;
+    }
+
+/* adjust buttons */
+.btn{
+  margin: 0px;
+}
+.btnLogin{
+  width: 100px;
+}
+  .buttonApply {
+    float:right;
+    margin: 0px;
+    margin: 5px 0px 20px 0px;
+  }
+  .buttonDelete {
+     margin: 0px;
+  }
+  .btn:focus{
+   box-shadow: none !important;
+ }
+
+  .courseHeader{
+    margin: 0px 0px 40px 0px;
+  }
+
+  .toggleButton{
+    margin: 5px 10px 20px 0px;
+    color: rgb(240, 140, 0);
+    border-color: rgb(240, 140, 0);
+  }
+  .btn.toggleButton:hover {
+    border-color: #6c757d;
+  }
+
+  /* adjust checkbox  */
+  .listCheckbox {
+    text-align: center;
+  }
+
+  .buttonHide {
+    color: rgb(240, 140, 0);
+    border-color: rgb(240, 140, 0);
+    width: 75px;
+    margin:auto;
+    display:block;
+  }
+  
+  .buttonUnhide {
+    width: 75px;
+    margin:auto;
+    display:block;
+  }
+
+  /* adjust filter input box */
+  .filterInput {
+    margin: 5px 10px 20px 0px;
+    color:  #6c757d;
+    border-color: rgb(240, 140, 0);
+  }
+
+  .filterInput:focus {
+    box-shadow: none !important;
+    color:  #6c757d;
+    border-color: rgb(240, 140, 0);
+  }
+
+   .filterYearInput {
+    margin: 5px 20px 20px 0px;
+    color:  #6c757d;
+    border-color: rgb(240, 140, 0);
+    width: 70px;
+  }
+
+  .filterYearInput:focus {
+    box-shadow: none !important;
+    color:  #6c757d;
+    border-color: rgb(240, 140, 0);
+  }
+
+/* adjust email link hidden text */
+  .emailHidden {
+  margin: 10px 5px 0px 0px;
+  float: right;
+  }
+
+  .centerColumn {
+    text-align: center;
+  }
+
+  .wrapSmallCell {
+    width: 10%;
+  }
+
+  .grey {
+    color: rgb(185, 185, 184);
+  }
+
+  .centerColumn {
+    text-align: center;
+  }
+
+  .button {
+    color: rgb(240, 140, 0);
+    border-color: rgb(240, 140, 0);
+    background-color: white;
+  }
+
+  .button:hover {
+    color:  white;
+    border-color: #6c757d;
+    background-color: #6c757d;
+  }
+
+  .logHeader {
+    padding: 80px 20px 20px 20px;
+  }
+
+  .logHeader h3 {
+    text-align: center;
+  }
+  .logHeader h4 {
+    text-align: center;
+  }
+
+  .logHeader h5 {
+    text-align: center;
+    color:  #6c757d;
+  }
+
+  .grayInfoText {
+    color:  #6c757d;
+  }
+
+  th {
+    vertical-align: middle !important;
+  }
+
+  .GDPRInfo h4 {
+    padding-top: 18px;
+  }

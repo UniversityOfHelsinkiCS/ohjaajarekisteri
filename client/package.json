@@ -1,0 +1,48 @@
+{
+  "name": "tiedosto",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "http://svm-45.cs.helsinki.fi/ohjaajarekisteri",
+  "proxy": "http://localhost:8001",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "json-server": "^0.14.2",
+    "react": "^16.8.0-alpha.1",
+    "react-bootstrap": "^1.0.0-beta.10",
+    "react-dom": "^16.8.0-alpha.1",
+    "react-redux": "^6.0.0",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "^2.1.5",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
+  },
+  "scripts": {
+    "server": "json-server -p3001 db.json",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "CI=true react-scripts test --env=jsdom",
+    "test-coverage": "CI=true react-scripts test --env=jsdom --coverage",
+    "codecov": "./node_modules/.bin/codecov",
+    "eject": "react-scripts eject",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "babel-eslint": "^9.0.0",
+    "codecov": "^3.1.0",
+    "deep-freeze": "0.0.1",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.7.1",
+    "eslint": "^5.5.0",
+    "eslint-plugin-jest": "^21.27.2",
+    "eslint-plugin-react": "^7.11.1",
+    "jest-cli": "^21.2.1",
+    "jest-dom": "^3.1.3",
+    "react-testing-library": "^5.9.0"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
