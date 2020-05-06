@@ -1,31 +1,32 @@
 version: '2'
 services:
   frontend:
-    build: './TKT-ohjaajarekisteri-front'
-    image: tktohjaajarek/ohjaajarekisterifront:latest
+    build: './client'
+    #image: tktohjaajarek/ohjaajarekisterifront:latest
     ports:
       - "8000:8000"
     depends_on:
       - backend
       - db
+    restart: unless-stopped
   backend:
-    build: './TKT-ohjaajarekisteri-back'
-    image: tktohjaajarek/ohjaajarekisteriback:latest
+    build: './server'
+    #image: tktohjaajarek/ohjaajarekisteriback:latest
     depends_on:
       - db
     restart: unless-stopped
     environment:
       - NODE_ENV=production
       - PORT=3001
-      - SECRET=
-      - DATABASE_URL=postgresql://ohjaajarek:@db:5432/ohjaajarek
+      - SECRET=asd
+      - DATABASE_URL=postgresql://ohjaajarek:password@db:5432/ohjaajarek
   db:
     image: postgres:10.6
     restart: unless-stopped
     environment:
       - POSTGRES_DB=ohjaajarek
       - PGDATA=/data/ohjaajarek_db
-      - POSTGRES_USER=o
-      - POSTGRES_PASSWORD=
+      - POSTGRES_USER=ohjaajarek
+      - POSTGRES_PASSWORD=password
     volumes:
-      - /data/ohjaajarek_db:/data/ohjaajarek_db
+      - /data/ohjaajarek_db:/ohrek_db
