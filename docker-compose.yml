@@ -29,4 +29,4 @@ services:
       - POSTGRES_USER=ohjaajarek
       - POSTGRES_PASSWORD=password
     volumes:
-      - /data/ohjaajarek_db:/data/ohjaajarek_db
+      - /data/ohjaajarek_db:/ohrek_db
