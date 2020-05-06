@@ -10,6 +10,9 @@ services:
     depends_on:
       - backend
       - db
+    volumes:
+      - ./client:/app/
+      - /app/node_modules
   backend:
     build: './server'
     depends_on:
@@ -19,9 +22,12 @@ services:
       - "8001:3001"
     environment:
       - NODE_ENV=development
-      - PORT=3001
+      - DEV_PORT=3001
       - SECRET=aaaa
-      - DATABASE_URL=postgresql://ohjaajarek:password@db:5432/ohjaajarek
+      - DEV_DATABASE_URL=postgresql://ohjaajarek:password@db:5432/ohjaajarek
+    volumes:
+      - ./server:/app/
+      - /app/node_modules
   db:
     image: postgres:10.6
     restart: unless-stopped
