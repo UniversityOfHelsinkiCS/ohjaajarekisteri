@@ -1,24 +1,22 @@
-version: '3.5'
+version: '2'
 services:
   frontend:
-    build:
-      context: './client'
-      dockerfile: 'dev.Dockerfile'
+    build: './client'
+    # image: tktohjaajarek/ohjaajarekisterifront:latest
     ports:
-      - "8000:3000"
+      - "8000:8000"
     restart: unless-stopped
     depends_on:
       - backend
       - db
   backend:
     build: './server'
+    # image: tktohjaajarek/ohjaajarekisteriback:latest
     depends_on:
       - db
     restart: unless-stopped
-    ports:
-      - "8001:3001"
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=production
       - PORT=3001
       - SECRET=aaaa
       - DATABASE_URL=postgresql://ohjaajarek:password@db:5432/ohjaajarek
