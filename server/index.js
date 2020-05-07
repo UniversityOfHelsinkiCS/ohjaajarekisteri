@@ -43,6 +43,10 @@ app.use(`${apiUrl}/login`, loginRouter)
 app.use(`${apiUrl}/tokenCheck`, tokenCheckRouter)
 app.use(`${apiUrl}/studyProgramUrls`, studyProgramUrlsRouter)
 
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('build'))
+}
+
 //Updates courses on database every day at one second before midnight
 if (process.env.NODE_ENV !== 'test') {
   cron.schedule('59 23 * * *', async function () {

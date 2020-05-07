@@ -1,23 +1,16 @@
 version: '2'
 services:
-  frontend:
-    build: './client'
-    # image: tktohjaajarek/ohjaajarekisterifront:latest
-    ports:
-      - "8000:8000"
-    restart: unless-stopped
-    depends_on:
-      - backend
-      - db
   backend:
-    build: './server'
+    build: '.'
     # image: tktohjaajarek/ohjaajarekisteriback:latest
     depends_on:
       - db
     restart: unless-stopped
+    ports: 
+      - "8000:8000"
     environment:
       - NODE_ENV=production
-      - PORT=3001
+      - PORT=8000
       - SECRET=aaaa
       - DATABASE_URL=postgresql://ohjaajarek:password@db:5432/ohjaajarek
   db:
