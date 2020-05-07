@@ -5,11 +5,13 @@ services:
       context: './client'
       dockerfile: 'dev.Dockerfile'
     ports:
-      - "8000:3000"
+      - "8000:8000"
     restart: unless-stopped
     depends_on:
       - backend
       - db
+    environment:
+      - PORT=8000
     volumes:
       - ./client:/app/
       - /app/node_modules
@@ -21,10 +23,10 @@ services:
       - db
     restart: unless-stopped
     ports:
-      - "8001:3001"
+      - "8001:8001"
     environment:
       - NODE_ENV=development
-      - DEV_PORT=3001
+      - DEV_PORT=8001
       - SECRET=aaaa
       - DEV_DATABASE_URL=postgresql://ohjaajarek:password@db:5432/ohjaajarek
       - TEST_DATABASE_URL=postgresql://ohjaajarek:password@db:5432/test
