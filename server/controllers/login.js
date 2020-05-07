@@ -5,75 +5,26 @@ const axios = require('axios')
 const db = require('../models/index')
 const bcrypt = require('bcrypt')
 
-// Check for usre credentials on 'http://opetushallinto.cs.helsinki.fi/login'
-// Data returned is in this format
-// {
-//   "username": "",
-//   "student_number": "",
-//   "first_names": "",
-//   "last_name": ""
-// }
-
-// req user from auth server
-const authenticateOpetushallinto = async (uid) => {
-  try {
-    const res = await axios.post(config.login,
-      {
-        'username': username,
-        'password': password
-      }
-    )
-    return res
-  } catch (error) {
-    throw error
-  }
-}
-
-// Function for unit testing
-const authenticateFake = (username, password) => {
-  if (username === 'poju' && password === 'password') {
-    return { // test data
-      data: {
-        username: 'poju',
-        student_number: '123456789',
-        first_names: 'Juhani',
-        last_name: 'Pouta'
-      }
-    }
-  } else if (username === 'tytto' && password === 'password') {
-    return { // test data
-      data: {
-        username: 'tytto',
-        student_number: '987654321',
-        first_names: 'Katriina',
-        last_name: 'Myrsky'
-      }
-    }
-  }
-  else {
-    return {
-      data: {
-        error: 'incorrect credentials'
-      }
-    }
-  }
-}
-
-
 
 // Route for handling login
 loginRouter.post('/', async (req, res) => {
   try {
-    // authenticate user
-    //authResponse = authenticate()
+    const { 
+      uid,
+      schacpersonaluniquecode,
+      givenname,
+      sn,
+      employeenumber
+    } = req.headers
+
     const authenticatedUser = {
-      username: req.headers.uid,
-      student_number: req.headers.schacpersonaluniquecode ? req.headers.schacpersonaluniquecode.split(':')[6] : null,
-      first_names: req.headers.givenname,
-      last_name: req.headers.sn
+      username: uid,
+      student_number: schacpersonaluniquecode ? schacpersonaluniquecode.split(':')[6] : null,
+      first_names: givenname,
+      last_name: sn,
     }
 
-    if (req.headers.employeenumber) {
+    if (employeenumber) {
       // is employee, do stuff
       // Check if the login is for admin
       await loginAdmin(req, res)

@@ -1,12 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { notify, setError } from './../reducers/actionCreators/notificationActions'
 import { login } from './../reducers/actionCreators/loginActions'
-import { Form, Button, Col, Container, Row, Spinner } from 'react-bootstrap'
+import { Button, Col, Container, Row, Spinner } from 'react-bootstrap'
 
 export const LoginForm = ({ login, loadingUser }) => {
-
-
   const handleStudentLogin = () => {
     login('student')
   }
