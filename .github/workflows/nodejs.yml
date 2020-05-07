@@ -21,8 +21,11 @@ jobs:
       - name: docker-compose up -d
         run: docker-compose up -d
       
-      - name: setup tests
-        run: npm run test:setup
+      - name: create test db
+        run: docker-compose exec db psql -U ohjaajarek -c 'CREATE DATABASE test'
+      
+      - name: migrate test db
+        run: docker-compose exec backend npm run migrate-test
       
       - name: test
         run: npm run test
