@@ -27,6 +27,7 @@ services:
       - DEV_PORT=3001
       - SECRET=aaaa
       - DEV_DATABASE_URL=postgresql://ohjaajarek:password@db:5432/ohjaajarek
+      - TEST_DATABASE_URL=postgresql://ohjaajarek:password@db:5432/test
     volumes:
       - ./server:/app/
       - /app/node_modules
