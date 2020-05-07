@@ -1,0 +1,19 @@
+{
+  "name": "ohjaajarekisteri",
+  "version": "1.0.0",
+  "description": "Ohjaajarekisteri monorepo",
+  "scripts": {
+    "start": "docker-compose up -d && docker-compose logs -tf --tail=1000",
+    "docker:down": "docker-compose down"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UniversityOfHelsinkiCS/ohjaajarekisteri.git"
+  },
+  "author": "grp-toska",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/UniversityOfHelsinkiCS/ohjaajarekisteri/issues"
+  },
+  "homepage": "https://github.com/UniversityOfHelsinkiCS/ohjaajarekisteri#readme"
+}
