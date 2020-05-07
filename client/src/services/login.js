@@ -3,9 +3,29 @@ import url from './config'
 
 const baseUrl = url + 'api/login'
 
-const login = async (credentials) => {
+const login = async (role) => {
   try {
-    const response = await axios.post(baseUrl, credentials)
+    const student = {
+      uid: 'UToska',
+      schacPersonalUniqueCode: 'urn:schac:personalUniqueCode:int:studentID:helsinki.fi:014339923',
+      givenName: 'UusiHenkilö',
+      sn: 'Toska',
+      email: 'grp-toska+ohrekstudent@helsinki.fi',
+    }
+
+    const admin = {
+      uid: 'VToska',
+      givenName: 'VanhaHenkilö',
+      sn: 'Ex-Toskalainen',
+      employeeNumber: '123161',
+      email: 'grp-toska+ohrekadmin@helsinki.fi',
+    }
+
+    
+    const response = await axios.post(baseUrl, null,
+      {
+        headers: role === 'student' ? student : admin
+      })
     return response.data
   } catch (error) {
     const status = error.response.status

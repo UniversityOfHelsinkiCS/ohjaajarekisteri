@@ -6,23 +6,13 @@ import { Form, Button, Col, Container, Row, Spinner } from 'react-bootstrap'
 
 export const LoginForm = ({ login, loadingUser }) => {
 
-  const [input, setInput] = useState({ username: '', password: '' })
 
-  const handleLogin = (event) => {
-    event.preventDefault()
-    const { username, password } = input
-
-    login(username, password)
-
-    setInput({ username: '', password: '' })
+  const handleStudentLogin = () => {
+    login('student')
   }
 
-  const handleChange = (event) => {
-    const newInput = {
-      ...input,
-      [event.target.name]: event.target.value
-    }
-    setInput(newInput)
+  const handleAdminLogin = () => {
+    login('admin')
   }
 
   return (
@@ -38,40 +28,34 @@ export const LoginForm = ({ login, loadingUser }) => {
         </Row>
         <Row>
           <Col md={{ span: 6, offset: 3 }}>
-            <Form onSubmit={handleLogin}>
-              <Form.Group>
-                <Form.Label>username</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="username"
-                  value={input.username}
-                  onChange={handleChange}
-                  autoFocus
-                />
-
-                <Form.Label>password </Form.Label>
-                <Form.Control
-                  type="password"
-                  name="password"
-                  value={input.password}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-              <Button className="btnLogin" variant="dark" type="submit" disabled={loadingUser}>
-                {
-                  loadingUser ?
-                    <Spinner
-                      animation="border"
-                      size="sm"
-                      role="status"
-                    >
-                      <span className="sr-only">Loading...</span>
-                    </Spinner>
-                    :
-                    'Login'
-                }
-              </Button>
-            </Form>
+            <Button onClick={handleStudentLogin} className="btnLogin" variant="dark" type="submit" disabled={loadingUser}>
+              {
+                loadingUser ?
+                  <Spinner
+                    animation="border"
+                    size="sm"
+                    role="status"
+                  >
+                    <span className="sr-only">Loading...</span>
+                  </Spinner>
+                  :
+                  'Login as student'
+              }
+            </Button>
+            <Button onClick={handleAdminLogin} className="btnLogin" variant="dark" type="submit" disabled={loadingUser}>
+              {
+                loadingUser ?
+                  <Spinner
+                    animation="border"
+                    size="sm"
+                    role="status"
+                  >
+                    <span className="sr-only">Loading...</span>
+                  </Spinner>
+                  :
+                  'Login as admin'
+              }
+            </Button>
           </Col>
         </Row>
       </Container>

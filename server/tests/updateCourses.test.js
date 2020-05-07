@@ -18,9 +18,9 @@ describe('tests for updating courses', () => {
         where: {}
       })  
       
-      const candidate = await db.StudyProgramUrl.create({ type: 'candidate', url: 'https://studies.helsinki.fi/organizations/500-K005/courses_list.json?periods=1&periods=2&periods=3&periods=4&periods=5&types=teaching' })
-      const master = await db.StudyProgramUrl.create({ type: 'master', url: 'https://studies.helsinki.fi/organizations/500-M009/courses_list.json?periods=1&periods=2&periods=3&periods=4&periods=5&types=teaching' })
-      const dataScience = await db.StudyProgramUrl.create({ type: 'data', url: 'https://studies.helsinki.fi/organizations/500-M010/courses_list.json?periods=1&periods=2&periods=3&periods=4&periods=5&types=teaching' })
+      const candidate = await db.StudyProgramUrl.create({ type: 'candidate', url: 'https://opetushallinto.cs.helsinki.fi/organizations/500-K005/filtered_courses.json' })
+      const master = await db.StudyProgramUrl.create({ type: 'master', url: 'https://opetushallinto.cs.helsinki.fi/organizations/500-M009/filtered_courses.json' })
+      const dataScience = await db.StudyProgramUrl.create({ type: 'data', url: 'https://opetushallinto.cs.helsinki.fi/organizations/500-M010/filtered_courses.json' })
 
       const candidateDataJson = await axios.get(candidate.url)
       const masterDataJson = await axios.get(master.url)

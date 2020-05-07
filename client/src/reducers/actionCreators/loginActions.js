@@ -59,10 +59,10 @@ export const updateLoggedUser = (content, id) => {
 }
 
 
-export const login = (username, password) => {
+export const login = (role) => {
   return async (dispatch) => {
     dispatch({ type: 'LOGIN' })
-    const response = await loginService.login({ username: username, password: password })
+    const response = await loginService.login(role)
     if (response.error) {
       dispatch({ type: 'LOGIN_FAILURE' })
       dispatch({

@@ -15,7 +15,7 @@ const bcrypt = require('bcrypt')
 // }
 
 // req user from auth server
-const authenticateOpetushallinto = async (username, password) => {
+const authenticateOpetushallinto = async (uid) => {
   try {
     const res = await axios.post(config.login,
       {
@@ -59,37 +59,22 @@ const authenticateFake = (username, password) => {
   }
 }
 
-//Checks if username and password exits on Opetushallinto servers
-const authenticate = async (username, password) => {
-  if (config.fakeLogin) {
-    // Used for automatic unit tests
-    return await authenticateFake(username, password)
-  } else {
-    return await authenticateOpetushallinto(username, password)
-  }
-}
 
 
 // Route for handling login
 loginRouter.post('/', async (req, res) => {
   try {
-    if (!req.body.username || !req.body.password) {
-      // username or password field undefined
-      return res.status(400).json({ error: 'missing username or password' })
+    // authenticate user
+    //authResponse = authenticate()
+    const authenticatedUser = {
+      username: req.headers.uid,
+      student_number: req.headers.schacpersonaluniquecode ? req.headers.schacpersonaluniquecode.split(':')[6] : null,
+      first_names: req.headers.givenname,
+      last_name: req.headers.sn
     }
 
-    // authenticate user
-    let authResponse
-    try {
-      authResponse = await authenticate(req.body.username, req.body.password)
-    } catch (error) {
-      // error from auth server
-      console.log(error)
-      return res.status(500).json({ error: 'authentication error' })
-    }
-    const authenticatedUser = authResponse.data
-    if (!authenticatedUser.hasOwnProperty('student_number')) {
-      // authenticatedUser was not found (incorrect credentials)
+    if (req.headers.employeenumber) {
+      // is employee, do stuff
       // Check if the login is for admin
       await loginAdmin(req, res)
     } else {
