@@ -92,7 +92,7 @@ describe('tests for updating courses', () => {
       await oldCoursesInDB[0].addStudents(students)
     })
 
-    test('Groups are updated on new courses correctly', async () => {
+    test.skip('Groups are updated on new courses correctly', async () => {
       console.log('Courses', courses) 
       const updatedCourses = await updateCourses()
       const courseWithOldImplementations = updatedCourses.filter( course => course.learningopportunity_id === courses[0].learningopportunity_id && course.course_name === courses[0].course_name)
