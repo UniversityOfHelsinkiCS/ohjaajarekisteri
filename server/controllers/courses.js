@@ -12,9 +12,9 @@ coursesRouter.get('/', checkLogin, async (req, res) => {
     if(token.role === 'admin') {
       courses = await db.Course.findAll({
         include: [{
-          model: db.Student,
-          as: 'students',
-          attributes: ['student_id'],
+          model: db.User,
+          as: 'users',
+          attributes: ['uid'],
           through: { attributes: ['accepted'] }
         }]
       })
@@ -60,8 +60,8 @@ coursesRouter.get('/summary', checkAdmin, async (req, res) => {
   try {
     const courses = await db.Course.findAll({
       include: [{
-        model: db.Student,
-        as: 'students'
+        model: db.User,
+        as: 'users'
       }]
     })
     res.status(200).json(courses)
@@ -85,23 +85,23 @@ coursesRouter.get('/:id', checkLogin, async (req, res) => {
 coursesRouter.get('/:id/students', checkAdmin, async (req, res) => {
   const course = await db.Course
     .findByPk(req.params.id)
-  const students = await course.getStudents()
-  const returnedStudents = students.map(stud => {
+  const users = await course.getUsers()
+  const returnedUsers = users.map(user => {
     return {
-      email: stud.email,
-      experience: stud.experience,
-      first_names: stud.first_names,
-      last_name: stud.last_name,
-      no_english: stud.no_english,
-      apprentice: stud.apprentice,
-      phone: stud.phone,
-      student_id: stud.student_id,
-      student_number: stud.student_number,
-      accepted: stud.Application.accepted,
-      groups: stud.Application.groups
+      email: user.email,
+      experience: user.experience,
+      first_names: user.first_names,
+      last_name: user.last_name,
+      can_teach_in_english: user.can_teach_in_english,
+      apprentice: user.apprentice,
+      phone: user.phone,
+      uid: user.uid,
+      student_number: user.student_number,
+      accepted: user.Application.accepted,
+      groups: user.Application.groups
     }
   })
-  res.status(200).json(returnedStudents)
+  res.status(200).json(returnedUsers)
 })
 
 // Updates application status and group numbers of all applicants on a course
@@ -109,35 +109,35 @@ coursesRouter.post('/:id/students/', checkAdmin, async (req, res) => {
   try {
     const course = await db.Course
       .findByPk(req.params.id)
-    let students = await course.getStudents()
-    students.forEach(student => {
-      const foundStudent = req.body.find(a => a.student_id === student.student_id)
-      student.Application = {
-        ...student.Application,
-        accepted: foundStudent ? foundStudent.accepted : student.Application.accepted,
-        groups: foundStudent ? foundStudent.groups : student.Application.groups
+    let users = await course.getUsers()
+    users.forEach(user => {
+      const foundUser = req.body.find(a => a.uid === user.uid)
+      user.Application = {
+        ...user.Application,
+        accepted: foundUser ? foundUser.accepted : user.Application.accepted,
+        groups: foundUser ? foundUser.groups : user.Application.groups
       }
-      return student
+      return user
     })
-    await course.setStudents(students)
-    students = await course.getStudents({})
+    await course.setUsers(users)
+    users = await course.getUsers({})
 
-    const returnedStudents = students.map(stud => {
+    const returnedUsers = users.map(user => {
       return {
-        email: stud.email,
-        experience: stud.experience,
-        first_names: stud.first_names,
-        last_name: stud.last_name,
-        no_english: stud.no_english,
-        apprentice: stud.apprentice,
-        phone: stud.phone,
-        student_id: stud.student_id,
-        student_number: stud.student_number,
-        accepted: stud.Application.accepted,
-        groups: stud.Application.groups
+        email: user.email,
+        experience: user.experience,
+        first_names: user.first_names,
+        last_name: user.last_name,
+        can_teach_in_english: user.can_teach_in_english,
+        apprentice: user.apprentice,
+        phone: user.phone,
+        uid: user.uid,
+        student_number: user.student_number,
+        accepted: user.Application.accepted,
+        groups: user.Application.groups
       }
     })
-    res.status(200).json(returnedStudents)
+    res.status(200).json(returnedUsers)
   } catch (error) {
     console.log(error.message)
     res.status(400).json({ error: 'malformatted request' })

@@ -31,8 +31,8 @@ const updateCourses = async () => {
   const coursesAtStart = await db.Course.findAll({
     include:
       [{
-        model: db.Student,
-        as: 'students'
+        model: db.User,
+        as: 'users'
       }]
   })
 
@@ -145,14 +145,14 @@ const getMostRecentGroupSize = async (newCourseName, coursesAtStart) => {
       previousCourse = course
     }
   })
-  if (previousCourse.students.length === 0) return null
+  if (previousCourse.users.length === 0) return null
 
   //Get the groups of all applications as an array of groups
   const groups = []
 
-  previousCourse.students.forEach(student => {
-    if (student.Application.accepted) {
-      groups.push(student.Application.groups)
+  previousCourse.users.forEach(user => {
+    if (user.Application.accepted) {
+      groups.push(user.Application.groups)
     }
   })
   //Sum up all of the groups on the course
