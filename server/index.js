@@ -43,6 +43,7 @@ app.use(`${apiUrl}/login`, loginRouter)
 app.use(`${apiUrl}/tokenCheck`, tokenCheckRouter)
 app.use(`${apiUrl}/studyProgramUrls`, studyProgramUrlsRouter)
 
+// Serve frontend in production
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('build'))
 }

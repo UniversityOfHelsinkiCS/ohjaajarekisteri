@@ -7,7 +7,6 @@ WORKDIR /app
 # Copy package.json to container's /app directory and install dependencies
 COPY package.json package-lock.json /app/
 RUN npm install
-COPY . /app
 
 # Launch application
 CMD npm run watch
