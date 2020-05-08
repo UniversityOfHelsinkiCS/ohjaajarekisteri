@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken')
 const config = require('../config/config')
 const axios = require('axios')
 const db = require('../models/index')
-const bcrypt = require('bcrypt')
 
 
 // Route for handling login
@@ -43,9 +42,6 @@ const loginAdmin = async (req, res) => {
   try {
     // find admin and user info
     const foundAdmin = await db.Admin.findOne({ where: { username: req.headers.username } })
-
-    // const passwordCorrect = foundAdmin === null ?
-    //   false : await bcrypt.compare(req.body.password, foundAdmin.passwordHash)
 
     if (!foundAdmin) {
       // incorrect credentials for admin or incorrect credentials response from auth server

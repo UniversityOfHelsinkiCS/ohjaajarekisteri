@@ -21,6 +21,11 @@ const login = async (role) => {
       employeeNumber: '123161',
       email: 'grp-toska+ohrekadmin@helsinki.fi',
     }
+
+    if (!role) {
+      const response = await axios.post(baseUrl, null)
+      return response.data
+    }
     
     const response = await axios.post(baseUrl, null,
       {

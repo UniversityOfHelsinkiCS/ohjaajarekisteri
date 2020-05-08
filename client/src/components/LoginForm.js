@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { notify, setError } from './../reducers/actionCreators/notificationActions'
 import { login } from './../reducers/actionCreators/loginActions'
@@ -12,6 +12,10 @@ export const LoginForm = ({ login, loadingUser }) => {
   const handleAdminLogin = () => {
     login('admin')
   }
+
+  useEffect(() => {
+    login()
+  }, [])
 
   return (
     <div className='studentForm'>
