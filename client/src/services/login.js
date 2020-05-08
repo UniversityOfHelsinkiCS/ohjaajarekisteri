@@ -14,6 +14,7 @@ const login = async (role) => {
     }
 
     const admin = {
+      username: 'rekAdmin',
       uid: 'VToska',
       givenName: 'VanhaHenkilö',
       sn: 'Ex-Toskalainen',

@@ -42,12 +42,12 @@ loginRouter.post('/', async (req, res) => {
 const loginAdmin = async (req, res) => {
   try {
     // find admin and user info
-    const foundAdmin = await db.Admin.findOne({ where: { username: req.body.username } })
+    const foundAdmin = await db.Admin.findOne({ where: { username: req.headers.username } })
 
-    const passwordCorrect = foundAdmin === null ?
-      false : await bcrypt.compare(req.body.password, foundAdmin.passwordHash)
+    // const passwordCorrect = foundAdmin === null ?
+    //   false : await bcrypt.compare(req.body.password, foundAdmin.passwordHash)
 
-    if (!(foundAdmin && passwordCorrect)) {
+    if (!foundAdmin) {
       // incorrect credentials for admin or incorrect credentials response from auth server
       return res.status(401).json({ error: 'incorrect credentials' })
     }
