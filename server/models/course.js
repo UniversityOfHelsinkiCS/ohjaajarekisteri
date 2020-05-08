@@ -45,10 +45,10 @@ module.exports = (sequelize, Sequelize) => {
 
   //Association table config for Sequelize
   Course.associate = (models) => {
-    Course.belongsToMany(models.Student, {
+    Course.belongsToMany(models.User, {
       through: 'Application',
       foreignKey: 'course_id',
-      as: 'students'
+      as: 'users'
     })
   }
 

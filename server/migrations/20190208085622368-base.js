@@ -3,19 +3,6 @@
 
 var Sequelize = require('sequelize')
 
-/**
- * Actions summary:
- * up:
- * createTable 'Admins', deps: []
- * createTable 'Courses', deps: []
- * createTable 'Students', deps: []
- * createTable 'Users', deps: []
- * createTable 'student_course', deps: [Courses, Students]
- *
- * down:
- * drop all tables
- **/
-
 var info = {
   'revision': 1,
   'name': '20190208085622368-base',
@@ -23,44 +10,7 @@ var info = {
   'comment': ''
 }
 //Commands that are run upon migration
-var migrationCommands = [{
-  fn: 'createTable',
-  params: [
-    'Admins',
-    {
-      'admin_id': {
-        'type': Sequelize.INTEGER,
-        'field': 'admin_id',
-        'unique': true,
-        'allowNull': false,
-        'primaryKey': true,
-        'autoIncrement': true
-      },
-      'username': {
-        'type': Sequelize.STRING(55),
-        'field': 'username',
-        'unique': true,
-        'allowNull': false
-      },
-      'passwordHash': {
-        'type': Sequelize.STRING,
-        'field': 'passwordHash',
-        'allowNull': false
-      },
-      'createdAt': {
-        'type': Sequelize.DATE,
-        'field': 'createdAt',
-        'allowNull': false
-      },
-      'updatedAt': {
-        'type': Sequelize.DATE,
-        'field': 'updatedAt',
-        'allowNull': false
-      }
-    },
-    {}
-  ]
-},
+var migrationCommands = [
 {
   fn: 'createTable',
   params: [
@@ -130,21 +80,20 @@ var migrationCommands = [{
 {
   fn: 'createTable',
   params: [
-    'Students',
+    'Users',
     {
-      'student_id': {
-        'type': Sequelize.INTEGER,
-        'field': 'student_id',
+      'uid': {
+        'type': Sequelize.STRING,
+        'field': 'uid',
         'unique': true,
         'allowNull': false,
         'primaryKey': true,
-        'autoIncrement': true
       },
       'student_number': {
         'type': Sequelize.STRING(16),
         'field': 'student_number',
         'unique': true,
-        'allowNull': false
+        'allowNull': true
       },
       'first_names': {
         'type': Sequelize.STRING(127),
@@ -156,7 +105,7 @@ var migrationCommands = [{
         'field': 'last_name',
         'allowNull': false
       },
-      'no_english': {
+      'can_teach_in_english': {
         'type': Sequelize.BOOLEAN,
         'defaultValue': false
       },
@@ -181,42 +130,9 @@ var migrationCommands = [{
         'type': Sequelize.BOOLEAN,
         'defaultValue': false
       },
-      'createdAt': {
-        'type': Sequelize.DATE,
-        'field': 'createdAt',
-        'allowNull': false
-      },
-      'updatedAt': {
-        'type': Sequelize.DATE,
-        'field': 'updatedAt',
-        'allowNull': false
-      }
-    },
-    {}
-  ]
-},
-{
-  fn: 'createTable',
-  params: [
-    'Users',
-    {
-      'user_id': {
-        'type': Sequelize.INTEGER,
-        'field': 'user_id',
-        'unique': true,
-        'allowNull': false,
-        'primaryKey': true,
-        'autoIncrement': true
-      },
-      'role': {
-        'type': Sequelize.STRING(16),
-        'field': 'role',
-        'allowNull': false
-      },
-      'role_id': {
-        'type': Sequelize.INTEGER,
-        'field': 'role_id',
-        'allowNull': false
+      'admin': {
+        'type': Sequelize.BOOLEAN,
+        'defaultValue': false
       },
       'createdAt': {
         'type': Sequelize.DATE,
@@ -304,14 +220,14 @@ var migrationCommands = [{
         },
         'foreignKey': true
       },
-      'student_id': {
-        'type': Sequelize.INTEGER,
-        'field': 'student_id',
+      'user_id': {
+        'type': Sequelize.STRING,
+        'field': 'user_id',
         'onUpdate': 'CASCADE',
         'onDelete': 'CASCADE',
         'references': {
-          'model': 'Students',
-          'key': 'student_id'
+          'model': 'Users',
+          'key': 'uid'
         },
         'foreignKey': true
       },
