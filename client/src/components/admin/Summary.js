@@ -177,7 +177,7 @@ export const Summary = ({
                       {course.users.map(user =>
                         <tr key={user.uid} >
                           <td width='80' shrink-to-fit='no' >
-                            <Link to={`/admin/students/${user.student_id}/info`}>
+                            <Link to={`/admin/students/${user.uid}/info`}>
                               {user.student_number}
                             </Link>
                           </td>

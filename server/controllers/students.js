@@ -161,33 +161,4 @@ studentsRouter.put('/:id/:course_id/hide', checkUser, async (req, res) => {
   }
 })
 
-/* //Delete request that deletes a student from the database based on id
-studentsRouter.delete('/:id', checkUser, async (req, res) => {
-  try {
-    const user = await db.User.findOne({ where: { user_id: req.params.id } })
-    await db.Student.destroy({ where: { student_id: user.role_id } })
-    await db.User.destroy({ where: { user_id: user.user_id } })
-    res.status(204).end()
-
-  } catch (exception) {
-    console.log(exception)
-    res.status(400).json({ error: 'bad req' })
-  }
-}) */
-
-//Only for development
-
-/* studentsRouter.put('/:id/deleteCD', async (req, res) => {
-  try {
-    let student = await db.Student.findOne({ where: { student_id: req.params.id } })
-
-    await student.update({ nickname: null, email: null, phone: null })
-    res.status(200).end()
-
-  } catch (error) {
-    console.log(error.message)
-    res.status(400).json({ error: 'bad req' })
-  }
-}) */
-
 module.exports = studentsRouter
