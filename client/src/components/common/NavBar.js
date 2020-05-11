@@ -56,12 +56,6 @@ export const NavBar = ({ loggedUser, logout }) => {
           </Nav>
 
           <Nav.Link href='#' as='span'>
-            {loggedUser && loggedUser.user.role === 'admin'
-              ? <Link to='/admin'>Change password</Link>
-              : <em></em>} &nbsp;
-          </Nav.Link>
-
-          <Nav.Link href='#' as='span'>
             {loggedUser && loggedUser.user.role === 'student' && loggedUser.user.email
               ? <Link to='/privacy'>Privacy Statement</Link>
               : <em></em>} &nbsp;
