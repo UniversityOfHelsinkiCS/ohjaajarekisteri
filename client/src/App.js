@@ -10,7 +10,6 @@ import ContactDetailsUpdateForm from './components/student/ContactDetailsUpdateF
 import AdminCourseList from './components/admin/CourseList'
 import Summary from './components/admin/Summary'
 import StudentDelete from './components/admin/StudentDelete'
-import UpdatePasswordForm from './components/admin/UpdatePasswordForm'
 import CourseApplicationList from './components/student/CourseApplicationList'
 import SingleCourse from './components/admin/SingleCourse'
 import SingleStudent from './components/admin/SingleStudent'
@@ -75,10 +74,6 @@ const App = (props) => {
                 <Route
                   exact path="/admin/students/:id/info"
                   render={({ match }) => <SingleStudent studentId={match.params.id} />}
-                />
-                <Route
-                  exact path="/admin"
-                  render={() => <UpdatePasswordForm />}
                 />
               </PrivateRoute>
 
