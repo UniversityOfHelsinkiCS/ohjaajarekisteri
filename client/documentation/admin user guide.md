@@ -56,10 +56,7 @@ By clicking student number, user is directed to single student page. Here user c
 
 ### Deleting a student
 
-If a student requests his or hers data to be removed, it can be done by clicking "Delete Student" on the navigation bar, and then
-typing in student number and clicking "Delete Student". This will remove all data of the student from the database. 
-
-![title](https://github.com/TKT-ohjaajarekisteri/TKT-ohjaajarekisteri-front/blob/master/documentation/pictures/Näyttökuva%202019-5-6%20kello%2020.41.22.png)
+If a student requests his or hers data to be removed entirely, please request the Toska group to remove the information.
 
 ### Summary view
 
@@ -74,11 +71,3 @@ The view has same filters as in course view, with the addition of search field. 
 the typed letters.
 
 ![Summary with word filter](https://github.com/TKT-ohjaajarekisteri/TKT-ohjaajarekisteri-front/blob/master/documentation/pictures/Näyttökuva%202019-5-6%20kello%2020.42.57.png)
-
-### Changing password
-
-Changing password is done by Selecting "Change password" from navigation panel. Type in old password and new password in both
-fields to change it. Password can be recovered ONLY by system administration. 
-
-![change password](https://github.com/TKT-ohjaajarekisteri/TKT-ohjaajarekisteri-front/blob/master/documentation/pictures/Näyttökuva%202019-5-7%20kello%2020.45.19.png)
-
