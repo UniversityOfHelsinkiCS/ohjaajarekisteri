@@ -144,7 +144,7 @@ export const Summary = ({
 
         <tbody>
           {summaryList
-            .filter(course => course.students.length !== 0)
+            .filter(course => course.users.length !== 0)
             .filter(course => {
               let period = course.periods[0].toString(10)
               return (
@@ -174,17 +174,17 @@ export const Summary = ({
                 <td>
                   <Table className='summaryStudentList' style={{ padding: '0', margin: '0' }} hover size="sm">
                     <tbody>
-                      {course.students.map(s =>
-                        <tr key={s.student_id} >
+                      {course.users.map(user =>
+                        <tr key={user.uid} >
                           <td width='80' shrink-to-fit='no' >
-                            <Link to={`/admin/students/${s.student_id}/info`}>
-                              {s.student_number}
+                            <Link to={`/admin/students/${user.student_id}/info`}>
+                              {user.student_number}
                             </Link>
                           </td>
-                          <td className="studentName centerColumn"> {s.first_names} {s.last_name}</td>
-                          <td width='75'> {s.Application.accepted ? <Badge variant="success">Accepted</Badge> : <Badge variant="secondary">Pending</Badge>}</td>
+                          <td className="studentName centerColumn"> {user.first_names} {user.last_name}</td>
+                          <td width='75'> {user.Application.accepted ? <Badge variant="success">Accepted</Badge> : <Badge variant="secondary">Pending</Badge>}</td>
                           <td width='50'>
-                            {s.canTeachEnglish ?
+                            {user.canTeachEnglish ?
                               <img
                                 src={require('../../Images/finnishFlag.png')}
                                 width='30'
