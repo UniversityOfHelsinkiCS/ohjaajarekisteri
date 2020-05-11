@@ -171,7 +171,7 @@ export const SingleCourse = ({
         </thead>
         <tbody>
           {applicants.map(student =>
-            <tr className='Student' key={student.student_id}>
+            <tr className='Student' key={student.uid}>
               <td>
                 <Link to={`/admin/students/${student.student_id}/info`}>
                   {student.student_number}
