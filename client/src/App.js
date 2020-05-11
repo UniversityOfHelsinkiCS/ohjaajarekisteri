@@ -94,7 +94,7 @@ const App = (props) => {
                 exact path="/contact-info"
                 redirectPath="/login"
                 condition={!hasContactDetails && loggedUser}
-                render={() => <ContactDetailsForm id={loggedUser.user.user_id} />}
+                render={() => <ContactDetailsForm id={loggedUser.user.uid} />}
               />
 
 
@@ -108,18 +108,18 @@ const App = (props) => {
                     />
                     <Route
                       exact path="/apply"
-                      render={() => <CourseApplicationList id={loggedUser.user.user_id} />}
+                      render={() => <CourseApplicationList id={loggedUser.user.uid} />}
                     />
 
                     {/* USERS CAN UPDATE THEIR INFORMATION */}
                     <Route
                       exact path="/update-info"
-                      render={() => <ContactDetailsUpdateForm id={loggedUser.user.user_id} />}
+                      render={() => <ContactDetailsUpdateForm id={loggedUser.user.uid} />}
                     />
                     {/* USERS CAN SEE THEIR APPLICATIONS */}
                     <Route
                       exact path="/applications"
-                      render={() => <StudentCourseList id={loggedUser.user.user_id} />}
+                      render={() => <StudentCourseList id={loggedUser.user.uid} />}
                     />
                     {/* GDPR INFORMATION VIEW */}
                     <Route

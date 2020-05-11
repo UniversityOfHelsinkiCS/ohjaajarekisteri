@@ -45,7 +45,7 @@ loginRouter.post('/', async (req, res) => {
       return res.status(200).json({
         token,
         user: {
-          user_id: savedUser.uid,
+          uid: savedUser.uid,
           role,
           email: savedStudent.email ? true : false // if the student has an email address added
         }

@@ -4,6 +4,7 @@ import adminService from '../../services/admins'
 import loginService from '../../services/login'
 import tokenCheckService from '../../services/tokenCheck'
 
+
 export const initLoggedUser = () => {
   return async (dispatch) => {
     let loggedUser = JSON.parse(window.localStorage.getItem('loggedInUser'))

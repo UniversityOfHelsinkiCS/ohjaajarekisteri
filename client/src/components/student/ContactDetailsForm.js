@@ -13,7 +13,6 @@ export const ContactDetailsForm = ({
   notify,
   updateLanguage,
   updateExperience,
-  updateEmail,
   updatePhone,
   updateApprentice
 }) => {
@@ -22,16 +21,12 @@ export const ContactDetailsForm = ({
     event.preventDefault()
     const formContent = {
       phone: event.target.phonenumber.value,
-      email: event.target.email.value,
       experience: event.target.experience.value,
       no_english: event.target.no_english.checked,
       apprentice: event.target.apprentice.checked
     }
-
-    if (!emailValid(formContent.email)) {
-      notify('Please check your email', 5)
-    }
-    else if (formContent.experience.length > 1000) {
+    
+    if (formContent.experience.length > 1000) {
       notify('Experience maximum length is 1000 characters', 5)
     } else {
       updateLoggedUser(formContent, id)
@@ -50,12 +45,6 @@ export const ContactDetailsForm = ({
             onChange={(e) => updatePhone(e.target.value)}
           />
           <Form.Label>Email: </Form.Label>
-          <Form.Control
-            type='email'
-            name='email'
-            onChange={(e) => updateEmail(e.target.value)}
-          />
-
           <Form.Label>Assistance/teaching experience (max length 1000 characters):</Form.Label>
           <Form.Control
             as='textarea'
