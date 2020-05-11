@@ -51,7 +51,7 @@ describe('tests for updating courses', () => {
         where: {}
       })
 
-      await db.Student.destroy({
+      await db.User.destroy({
         where: {}
       })
       
@@ -80,7 +80,7 @@ describe('tests for updating courses', () => {
 
 
       const oldCoursesInDB = await Promise.all(oldCourses.map(n => db.Course.create(n)))
-      const students = await Promise.all(initialStudents.map(n => db.Student.create(n)))
+      const students = await Promise.all(initialStudents.map(n => db.User.create(n)))
       students.forEach( student => 
         student.Application = {
           ...student.Application,
@@ -89,14 +89,8 @@ describe('tests for updating courses', () => {
         })
 
       students[0].Application.accepted = false  
-      await oldCoursesInDB[0].addStudents(students)
+      await oldCoursesInDB[0].addUsers(students)
     })
 
-    test.skip('Groups are updated on new courses correctly', async () => {
-      console.log('Courses', courses) 
-      const updatedCourses = await updateCourses()
-      const courseWithOldImplementations = updatedCourses.filter( course => course.learningopportunity_id === courses[0].learningopportunity_id && course.course_name === courses[0].course_name)
-      expect(courseWithOldImplementations[0].groups).toBe(4)
-    })
   })
 })

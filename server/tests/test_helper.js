@@ -1,10 +1,10 @@
 const db = require('../models/index')
-const bcrypt = require('bcrypt')
 const moment = require('moment')
 
 
 const initialStudents = [
   {
+    uid: 'jupouta',
     student_number: '123456789',
     first_names: 'Juhani',
     last_name: 'Pouta',
@@ -12,6 +12,7 @@ const initialStudents = [
     email: 'juhani.pouta@gmail.com',
   },
   {
+    uid: 'akus',
     student_number: '987654321',
     first_names: 'Aarlo',
     last_name: 'Kustaa',
@@ -19,6 +20,7 @@ const initialStudents = [
     email: 'arska.kustaa@gmail.com',
   },
   {
+    uid: 'tvirt',
     student_number: '192837465',
     first_names: 'Tomi',
     last_name: 'Virtanen',
@@ -27,18 +29,14 @@ const initialStudents = [
   }
 ]
 
-const passwordHasher = (password) => {
-  const saltRounds = 10
-  const passwordHash = bcrypt.hashSync(password, saltRounds)
-  return passwordHash
+const initialAdmin = {
+  uid: 'testAdmin',
+  first_names: 'Haba',
+  last_name: 'Ylijäbä',
+  phone: '112',
+  email: 'haba.virtanen@gmail.com',
+  admin: true
 }
-
-const initialAdmins = [
-  {
-    username: 'testAdmin',
-    passwordHash: passwordHasher('password')
-  }
-]
 
 const initialCourses = [
   {
@@ -110,9 +108,9 @@ const initialPastCourses = [
 
 ]
 
-const studentsInDb = async () => {
-  const students = await db.Student.findAll({})
-  return students
+const usersInDb = async () => {
+  const users = await db.User.findAll({})
+  return users
 }
 
 const coursesInDb = async () => {
@@ -120,20 +118,18 @@ const coursesInDb = async () => {
   return courses
 }
 
-const usersInDb = async () => {
-  const users = await db.User.findAll({})
+const studentsInDb = async () => {
+  const users = await db.User.findAll({ where: { admin: false }})
   return users
 }
 
 const adminsInDb = async () => {
-  const admins = await db.Admin.findAll({})
+  const admins = await db.User.find({where: { admin: true }})
   return admins
 }
 
 const deleteUser = async (student_number) => {
-  const foundStudent = await db.Student.findOne({ where: { student_number: student_number } })
-  const foundUser = await db.User.findOne({ where: { role_id: foundStudent.student_id } })
-  await db.Student.destroy({ where: { student_id: foundStudent.student_id } })
+  const foundUser = await db.User.findOne({ where: { student_number: student_number } })
   await db.User.destroy({ where: { user_id: foundUser.user_id } })
 }
 
@@ -160,14 +156,13 @@ const makeCourseArray = (array) => {
 
 module.exports = {
   initialStudents,
+  initialAdmin,
   initialCourses,
   initialPastCourses,
-  initialAdmins,
-  studentsInDb,
+  studentsInDb: usersInDb,
   coursesInDb,
   usersInDb,
   adminsInDb,
   deleteUser,
   makeCourseArray,
-  passwordHasher
 }

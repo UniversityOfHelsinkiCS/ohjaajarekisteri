@@ -4,7 +4,7 @@ const api = supertest(app)
 const db = require('../models/index')
 const jwt = require('jsonwebtoken')
 const config = require('../config/config')
-const { passwordHasher } = require('./test_helper')
+const { initialAdmin } = require('./test_helper')
 let studyProgramUrlsAtStart = null
 let token = null
 const index = 0
@@ -15,14 +15,9 @@ describe('tests for the studyProgramUrl controller', () => {
     await db.User.destroy({
       where: {}
     })
-  
-    await db.Admin.destroy({
-      where: {}
-    })
 
-    const admin = await db.Admin.create({ username: 'testAdmin', passwordHash: passwordHasher('password') })
-    const adminUser = await db.User.create({ role: 'admin', role_id: admin.admin_id })
-    token = jwt.sign({ id: adminUser.user_id, role: adminUser.role }, config.secret)
+    const adminUser = await db.User.create(initialAdmin)
+    token = jwt.sign({ id: adminUser.uid, role: adminUser.admin ? 'admin' : 'student' }, config.secret)
   })
 
   describe('When database has studyProgramUrls', () => {

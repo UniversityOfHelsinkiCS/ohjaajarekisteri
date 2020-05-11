@@ -4,12 +4,12 @@ const api = supertest(app)
 const db = require('../models/index')
 const jwt = require('jsonwebtoken')
 const config = require('../config/config')
-let token = null
+let adminToken = null
 let studentToken = null
 let courses = null
 let students = null
 const index = 0
-const { coursesInDb, initialCourses, initialStudents, passwordHasher, initialPastCourses } = require('./test_helper')
+const { coursesInDb, initialCourses, initialStudents, initialAdmin, initialPastCourses } = require('./test_helper')
 
 describe('tests for the courses controller', () => {
   jest.setTimeout(15000)
@@ -20,21 +20,12 @@ describe('tests for the courses controller', () => {
     await db.User.destroy({
       where: {}
     })
-    await db.Admin.destroy({
-      where: {}
-    })
 
-    await db.Student.destroy({
-      where: {}
-    })
+    const adminUser = await db.User.create(initialAdmin)
+    adminToken = jwt.sign({ id: adminUser.uid, role: adminUser.admin ? 'admin' : 'student' }, config.secret)
 
-    const admin = await db.Admin.create({ username: 'testAdmin', passwordHash: passwordHasher('password') })
-    const adminUser = await db.User.create({ role: 'admin', role_id: admin.admin_id })
-    token = jwt.sign({ id: adminUser.user_id, role: adminUser.role }, config.secret)
-
-    const student = await db.Student.create(initialStudents[0])
-    const studentUser = await db.User.create({ role: 'student', role_id: student.student_id })
-    studentToken = jwt.sign({ id: studentUser.user_id, role: studentUser.role }, config.secret)
+    const studentUser = await db.User.create(initialStudents[0])
+    studentToken = jwt.sign({ id: studentUser.uid, role: studentUser.admin ? 'admin' : 'student' }, config.secret)
   })
 
   describe('When database has courses', () => {
@@ -42,13 +33,12 @@ describe('tests for the courses controller', () => {
       await db.Course.destroy({
         where: {}
       })
-      await db.Student.destroy({
+      await db.User.destroy({
         where: {}
       })
 
-      const student = await db.Student.create(initialStudents[0])
-      const studentUser = await db.User.create({ role: 'student', role_id: student.student_id })
-      studentToken = jwt.sign({ id: studentUser.user_id, role: studentUser.role }, config.secret)
+      const studentUser = await db.User.create(initialStudents[0])
+      studentToken = jwt.sign({ id: studentUser.uid, role: studentUser.admin ? 'admin' : 'student' }, config.secret)
 
       courses = await Promise.all(initialCourses.map(n => db.Course.create(n)))
     })
@@ -56,7 +46,7 @@ describe('tests for the courses controller', () => {
     test('Course is returned as json by GET /api/courses/:course_id', async () => {
       const response = await api
         .get(`/api/courses/${courses[index].course_id}`)
-        .set('Authorization', `bearer ${token}`)
+        .set('Authorization', `bearer ${adminToken}`)
         .expect(200)
         .expect('Content-Type', /application\/json/)
 
@@ -69,7 +59,7 @@ describe('tests for the courses controller', () => {
 
       const response = await api
         .get('/api/courses/all')
-        .set('Authorization', `bearer ${token}`)
+        .set('Authorization', `bearer ${adminToken}`)
         .expect(200)
         .expect('Content-Type', /application\/json/)
 
@@ -84,7 +74,7 @@ describe('tests for the courses controller', () => {
     test('Course can be hidden by PUT /api/courses/:id/hide', async () => {
       const response = await api
         .put(`/api/courses/${courses[index].course_id}/hide`)
-        .set('Authorization', `bearer ${token}`)
+        .set('Authorization', `bearer ${adminToken}`)
         .expect(200)
         .expect('Content-Type', /application\/json/)
 
@@ -108,7 +98,7 @@ describe('tests for the courses controller', () => {
       await courses[index].update({ hidden: true })
       const response = await api
         .put(`/api/courses/${courses[index].course_id}/hide`)
-        .set('Authorization', `bearer ${token}`)
+        .set('Authorization', `bearer ${adminToken}`)
         .expect(200)
         .expect('Content-Type', /application\/json/)
 
@@ -118,11 +108,10 @@ describe('tests for the courses controller', () => {
     test('Empty applicant list is returned via COURSE request', async () => {
       const response = await api
         .get('/api/courses')
-        .set('Authorization', `bearer ${token}`)
+        .set('Authorization', `bearer ${adminToken}`)
         .expect(200)
         .expect('Content-Type', /application\/json/)
-
-      expect(JSON.parse(response.text)[index].students.length).toEqual(0)
+      expect(JSON.parse(response.text)[index].users.length).toEqual(0)
     })
   })
   
@@ -132,20 +121,20 @@ describe('tests for the courses controller', () => {
         where: {}
       })
 
-      await db.Student.destroy({
+      await db.User.destroy({
         where: {}
       })
 
       courses = await Promise.all(initialCourses.map(n => db.Course.create(n)))
 
-      students = await Promise.all(initialStudents.map(n => db.Student.create(n)))
-      await courses[index].addStudents(students)
+      students = await Promise.all(initialStudents.map(n => db.User.create(n)))
+      await courses[index].addUsers(students)
     })
 
     test('Students that have applied to course are listed with GET /api/courses/:course_id/students', async () => {
       const response = await api
         .get(`/api/courses/${courses[index].course_id}/students`)
-        .set('Authorization', `bearer ${token}`)
+        .set('Authorization', `bearer ${adminToken}`)
         .expect(200)
         .expect('Content-Type', /application\/json/)
 
@@ -156,7 +145,7 @@ describe('tests for the courses controller', () => {
     test('Applying students can be accepted as assistants with POST /api/courses/:course_id/students', async () => {
       const studentsToAccept = await students.map(student => {
         return {
-          student_id: student.student_id,
+          uid: student.uid,
           accepted: true,
           groups: 0
         }
@@ -164,23 +153,25 @@ describe('tests for the courses controller', () => {
 
       const response = await api
         .post(`/api/courses/${courses[index].course_id}/students`)
-        .set('Authorization', `bearer ${token}`)
+        .set('Authorization', `bearer ${adminToken}`)
         .send(studentsToAccept)
         .expect(200)
         .expect('Content-Type', /application\/json/)
 
       expect(response.text).toBeDefined()
-      expect(response.text).toContain(studentsToAccept[0].student_id)
-      expect(response.text).toContain(studentsToAccept[1].student_id)
+      expect(response.text).toContain(studentsToAccept[0].uid)
+      expect(response.text).toContain(studentsToAccept[1].uid)
+      expect(response.text).toContain(studentsToAccept[2].uid)
       expect(response.text).toContain(studentsToAccept[0].accepted)
       expect(response.text).toContain(studentsToAccept[1].accepted)
+      expect(response.text).toContain(studentsToAccept[2].accepted)
     })
 
     test('Group numbers can be changed with POST /api/courses/:course_id/students', async () => {
       const updatedGroupNumber = 17
       const studentsToAccept = students.map(student => {
         return {
-          student_id: student.student_id,
+          uid: student.uid,
           accepted: true,
           groups: updatedGroupNumber
         }
@@ -188,14 +179,14 @@ describe('tests for the courses controller', () => {
 
       const response = await api
         .post(`/api/courses/${courses[index].course_id}/students`)
-        .set('Authorization', `bearer ${token}`)
+        .set('Authorization', `bearer ${adminToken}`)
         .send(studentsToAccept)
         .expect(200)
         .expect('Content-Type', /application\/json/)
 
       expect(response.text).toBeDefined()
-      expect(response.text).toContain(studentsToAccept[0].student_id)
-      expect(response.text).toContain(studentsToAccept[1].student_id)
+      expect(response.text).toContain(studentsToAccept[0].uid)
+      expect(response.text).toContain(studentsToAccept[1].uid)
       expect(response.text).toContain(studentsToAccept[0].groups)
       expect(response.text).toContain(studentsToAccept[1].groups)
       expect(response.text).toContain(updatedGroupNumber)
@@ -204,14 +195,14 @@ describe('tests for the courses controller', () => {
 
   describe('When database has courses, students and an association is added', () => {
     beforeEach(async () => {
-      await db.Student.destroy({
+      await db.User.destroy({
         where: {}
       })
       await db.Course.destroy({
         where: {}
       })
 
-      students = await Promise.all(initialStudents.map(n => db.Student.create(n)))
+      students = await Promise.all(initialStudents.map(n => db.User.create(n)))
       courses = await Promise.all(initialPastCourses.map(n => db.Course.create(n)))
       await students[index].addCourse(courses[index])
     })
@@ -219,11 +210,11 @@ describe('tests for the courses controller', () => {
     test('applicant list is returned via summary request', async () => {
       const response = await api
         .get('/api/courses/summary')
-        .set('Authorization', `bearer ${token}`)
+        .set('Authorization', `bearer ${adminToken}`)
         .expect(200)
         .expect('Content-Type', /application\/json/)
 
-      expect(response.text).toContain('students')
+      expect(response.text).toContain('users')
     })
 
     test('Past courses are not returned as json by GET /api/courses', async () => {
@@ -231,7 +222,7 @@ describe('tests for the courses controller', () => {
 
       const response = await api
         .get('/api/courses')
-        .set('Authorization', `bearer ${token}`)
+        .set('Authorization', `bearer ${adminToken}`)
         .expect(200)
         .expect('Content-Type', /application\/json/)
         
@@ -244,7 +235,7 @@ describe('tests for the courses controller', () => {
 
       const response = await api
         .get('/api/courses/summary')
-        .set('Authorization', `bearer ${token}`)
+        .set('Authorization', `bearer ${adminToken}`)
         .expect(200)
         .expect('Content-Type', /application\/json/)
 
@@ -257,11 +248,11 @@ describe('tests for the courses controller', () => {
 
       const response = await api
         .get('/api/courses')
-        .set('Authorization', `bearer ${token}`)
+        .set('Authorization', `bearer ${adminToken}`)
         .expect(200)
         .expect('Content-Type', /application\/json/)
         
-      expect(response.text).toContain(test_student.student_id)
+      expect(response.text).toContain(test_student.uid)
     })
 
     test('Applicant list is not returned via COURSE request for students', async () => {
@@ -274,7 +265,7 @@ describe('tests for the courses controller', () => {
         .expect(200)
         .expect('Content-Type', /application\/json/)
         
-      expect(response.text).not.toContain(test_student.student_id)
+      expect(response.text).not.toContain(test_student.uid)
     })    
   })
 })

@@ -4,7 +4,7 @@ const api = supertest(app)
 const db = require('../models/index')
 const jwt = require('jsonwebtoken')
 const config = require('../config/config')
-const { initialStudents, studentsInDb, initialCourses, passwordHasher } = require('./test_helper')
+const { initialStudents, initialAdmin, studentsInDb, initialCourses, passwordHasher } = require('./test_helper')
 let token = null
 let students = null
 let courses = null
@@ -18,54 +18,44 @@ describe('tests for the students controller', () => {
     await db.User.destroy({
       where: {}
     })
-  
-    await db.Admin.destroy({
-      where: {}
-    })
 
-    await db.Student.destroy({
-      where: {}
-    })  
-
-    const admin = await db.Admin.create({ username: 'testAdmin', passwordHash: passwordHasher('password') })
-    const adminUser = await db.User.create({ role: 'admin', role_id: admin.admin_id })
-    token = jwt.sign({ id: adminUser.user_id, role: adminUser.role }, config.secret)
+    const adminUser = await db.User.create(initialAdmin)
+    token = jwt.sign({ id: adminUser.uid, role: adminUser.admin ? 'admin' : 'student' }, config.secret)
   })
 
   describe('When database has students', () => {
     beforeEach(async () => {
-      await db.Student.destroy({
+      await db.User.destroy({
         where: {}
       })  
 
-      students = await Promise.all(initialStudents.map(n => db.Student.create(n)))
-      users = await Promise.all(students.map(student => db.User.create({ role: 'student', role_id: student.student_id })))
-      studentToken = jwt.sign({ id: users[index].user_id, role: users[index].role }, config.secret)
+      users = await Promise.all(initialStudents.map(student => db.User.create(student)))
+      studentToken = jwt.sign({ id: users[index].uid, role: users[index].admin ? 'admin' : 'student' }, config.secret)
     })
 
     test('Student is returned as json by GET /api/students/:user_id', async () => {
       const response = await api
-        .get(`/api/students/${users[index].user_id}`)
+        .get(`/api/students/${users[index].uid}`)
         .set('Authorization', `bearer ${studentToken}`)
         .expect(200)
         .expect('Content-Type', /application\/json/)
       expect(response.text).toBeDefined()
-      expect(response.text).toContain(students[index].student_number)
+      expect(response.text).toContain(users[index].student_number)
     })
 
     test('Student details for admin are returned as json by GET /api/students/:student_id/info', async () => {
       const response = await api
-        .get(`/api/students/${students[index].student_id}/info`)
+        .get(`/api/students/${users[index].uid}/info`)
         .set('Authorization', `bearer ${token}`)
         .expect(200)
         .expect('Content-Type', /application\/json/)
       expect(response.text).toBeDefined()
-      expect(response.text).toContain(students[index].student_number)
+      expect(response.text).toContain(users[index].student_number)
     })
 
     test('Student for admin not returned if no admin token by GET /api/students/:student_id/info', async () => {
       const response = await api
-        .get(`/api/students/${students[index].student_id}/info`)
+        .get(`/api/students/${users[index].uid}/info`)
         .set('Authorization', `bearer ${studentToken}`)
         .expect(401)
       expect(response.text).toContain('not admin')
@@ -91,7 +81,7 @@ describe('tests for the students controller', () => {
 
   describe('When database has courses and students', () => {
     beforeEach(async () => {
-      await db.Student.destroy({
+      await db.User.destroy({
         where: {}
       })  
 
@@ -99,9 +89,8 @@ describe('tests for the students controller', () => {
         where: {}
       })  
 
-      students = await Promise.all(initialStudents.map(n => db.Student.create(n)))
-      users = await Promise.all(students.map(student => db.User.create({ role: 'student', role_id: student.student_id })))
-      studentToken = jwt.sign({ id: users[index].user_id, role: users[index].role }, config.secret)
+      students = await Promise.all(initialStudents.map(n => db.User.create(n)))
+      studentToken = jwt.sign({ id: students[index].uid, role: students[index].admin ? 'admin' : 'student' }, config.secret)
 
       courses = await Promise.all(initialCourses.map(n => db.Course.create( n )))
     })
@@ -110,14 +99,14 @@ describe('tests for the students controller', () => {
       let course_ids = courses.map(course => course.course_id)
 
       const response = await api
-        .post(`/api/students/${users[index].user_id}/courses/apply`)
+        .post(`/api/students/${users[index].uid}/courses/apply`)
         .set('Authorization', `bearer ${studentToken}`)
         .send({ 'course_ids': course_ids })
         .expect(201)
         .expect('Content-Type', /application\/json/)
 
-      const studentWithCourse = await db.Student.findOne({ where: {
-        student_id: students[index].student_id
+      const studentWithCourse = await db.User.findOne({ where: {
+        uid: students[index].uid
       },
       include: [{ model: db.Course, as: 'courses' }] 
       })
@@ -134,7 +123,7 @@ describe('tests for the students controller', () => {
 
   describe('When database has an association', () => {
     beforeEach(async () => {
-      await db.Student.destroy({
+      await db.User.destroy({
         where: {}
       })  
 
@@ -142,15 +131,14 @@ describe('tests for the students controller', () => {
         where: {}
       })  
 
-      students = await Promise.all(initialStudents.map(n => db.Student.create(n)))
-      users = await Promise.all(students.map(student => db.User.create({ role: 'student', role_id: student.student_id })))
-      studentToken = jwt.sign({ id: users[index].user_id, role: users[index].role }, config.secret)
+      students = await Promise.all(initialStudents.map(n => db.User.create(n)))
+      studentToken = jwt.sign({ id: students[index].uid, role: students[index].admin ? 'admin' : 'student' }, config.secret)
 
       courses = await Promise.all(initialCourses.map(n => db.Course.create( n )))
 
-      let student = await db.Student.findOne({ 
+      let student = await db.User.findOne({ 
         where: {
-          student_id: students[index].student_id
+          uid: students[index].uid
         }
       })
       await student.addCourse(courses[index])
@@ -158,7 +146,7 @@ describe('tests for the students controller', () => {
 
     test('Courses that a student has applied to are listed with GET /api/students/:user_id/courses', async () => {
       const response = await api
-        .get(`/api/students/${users[index].user_id}/courses`)
+        .get(`/api/students/${users[index].uid}/courses`)
         .set('Authorization', `bearer ${studentToken}`)
         .expect(200)
         .expect('Content-Type', /application\/json/)
@@ -169,7 +157,7 @@ describe('tests for the students controller', () => {
 
     test('Courses that a student has applied to are listed for admin with GET /api/students/:student_id/info/courses', async () => {
       const response = await api
-        .get(`/api/students/${students[index].student_id}/info/courses`)
+        .get(`/api/students/${students[index].uid}/info/courses`)
         .set('Authorization', `bearer ${token}`)
         .expect(200)
         .expect('Content-Type', /application\/json/)
@@ -194,7 +182,7 @@ describe('tests for the students controller', () => {
 
     test('Application can be hidden by PUT /api/students/:id/:course_id/hide', async () => {
       const response = await api
-        .put(`/api/students/${users[index].user_id}/${courses[index].course_id}/hide`)
+        .put(`/api/students/${users[index].uid}/${courses[index].course_id}/hide`)
         .set('Authorization', `bearer ${studentToken}`)
         .expect(200)
         .expect('Content-Type', /application\/json/)   
@@ -202,12 +190,13 @@ describe('tests for the students controller', () => {
     })
 
     test('Application can be unhidden by PUT /api/students/:id/:course_id/hide', async () => {
-      const student = await db.Student.findOne({ where: { student_id: users[index].role_id } })
-      const application = await db.Application.findOne({ where: { course_id: courses[index].course_id, student_id: student.student_id } })
+      // TURHA?
+      const student = await db.User.findOne({ where: { uid: users[index].uid } })
+      const application = await db.Application.findOne({ where: { course_id: courses[index].course_id, user_id: student.uid } })
       await application.update({ hidden: true })
 
       const response = await api
-        .put(`/api/students/${users[index].user_id}/${courses[index].course_id}/hide`)
+        .put(`/api/students/${users[index].uid}/${courses[index].course_id}/hide`)
         .set('Authorization', `bearer ${studentToken}`)
         .expect(200)
         .expect('Content-Type', /application\/json/)
@@ -216,8 +205,8 @@ describe('tests for the students controller', () => {
     })        
 
     test('Removes relation between a course and a student with DELETE /api/students/:user_id/courses/:course_id', async () => {
-      const studentWithCourseAtStart = await db.Student.findOne({ where: {
-        student_id: students[index].student_id
+      const studentWithCourseAtStart = await db.User.findOne({ where: {
+        uid: students[index].uid
       },
       include: [{ model: db.Course, as: 'courses' }] 
       })
@@ -225,12 +214,12 @@ describe('tests for the students controller', () => {
       expect(JSON.stringify(studentWithCourseAtStart)).toBeDefined()
 
       await api
-        .delete(`/api/students/${users[index].user_id}/courses/${courses[index].course_id}`)
+        .delete(`/api/students/${users[index].uid}/courses/${courses[index].course_id}`)
         .set('Authorization', `bearer ${studentToken}`)
         .expect(204)
 
-      const studentWithCourse = await db.Student.findOne({ where: {
-        student_id: students[index].student_id
+      const studentWithCourse = await db.User.findOne({ where: {
+        uid: students[index].uid
       },
       include: [{ model: db.Course, as: 'courses' }] 
       })
@@ -242,26 +231,25 @@ describe('tests for the students controller', () => {
 
   describe('When database has students and student users', () => {
     beforeEach(async () => {
-      await db.Student.destroy({
+      await db.User.destroy({
         where: {}
       })  
   
-      students = await Promise.all(initialStudents.map(n => db.Student.create(n)))
-      users = await Promise.all(students.map(student => db.User.create({ role: 'student', role_id: student.student_id })))
-      studentToken = jwt.sign({ id: users[index].user_id, role: users[index].role }, config.secret)
+      students = await Promise.all(initialStudents.map(n => db.User.create(n)))
+      studentToken = jwt.sign({ id: users[index].uid, role: users[index].admin ? 'admin' : 'student' }, config.secret)
     })
 
     test('Student can update his/her own data with PUT /api/students/:id', async () => {
-      const studentBefore = await db.Student.findOne({ where: { student_id: students[index].student_id } })
-      expect(studentBefore.no_english).toBeFalsy()
+      const studentBefore = await db.User.findOne({ where: { uid: students[index].uid } })
+      expect(studentBefore.can_teach_in_english).toBeFalsy()
 
       await api
-        .put(`/api/students/${users[index].user_id}`)
+        .put(`/api/students/${users[index].uid}`)
         .set('Authorization', `bearer ${studentToken}`)
-        .send({ email: 'maili@hotmail.com', phone: '0402356543', experience: 'very good', no_english: 'true' })
+        .send({ email: 'maili@hotmail.com', phone: '0402356543', experience: 'very good', can_teach_in_english: 'true' })
         .expect(200)
       
-      const updatedStudent = await db.Student.findOne({ where: { student_id: students[index].student_id } })
+      const updatedStudent = await db.User.findOne({ where: { uid: students[index].uid } })
       expect(updatedStudent).not.toContain(students[index].phone)
       expect(updatedStudent.phone).toBe('0402356543')
       expect(updatedStudent.experience).toBe('very good')

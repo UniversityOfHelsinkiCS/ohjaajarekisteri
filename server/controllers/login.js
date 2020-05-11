@@ -47,7 +47,7 @@ loginRouter.post('/', async (req, res) => {
         user: {
           uid: savedUser.uid,
           role,
-          email: savedStudent.email ? true : false // if the student has an email address added
+          email: savedUser.email ? true : false // if the student has an email address added
         }
       })
     }
