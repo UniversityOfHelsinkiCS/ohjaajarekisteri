@@ -32,7 +32,7 @@ describe('ContactDetailsUpdateForm', () => {
         phone: '050 00000',
         email: 'testitiina@helsinki.fi',
         experience: 'Ten years of testing',
-        no_english: false
+        canTeachEnglish: false
       }
     }
   })

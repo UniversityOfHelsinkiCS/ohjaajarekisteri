@@ -37,7 +37,7 @@ describe('<Summary />', () => {
           experience: 'ded',
           first_names: 'Timo *Teppo Tellervo',
           last_name: 'Testaaja',
-          no_english: true,
+          canTeachEnglish: true,
           phone: '040122333',
           student_id: 2,
           student_number: '012345678',

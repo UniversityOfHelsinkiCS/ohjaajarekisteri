@@ -10,7 +10,7 @@ export const ContactDetailsUpdateForm = ({
   phone,
   email,
   experience,
-  no_english,
+  canTeachEnglish,
   apprentice,
   updatePhone,
   updateEmail,
@@ -23,6 +23,8 @@ export const ContactDetailsUpdateForm = ({
   getContactInformation,
   defaultInput
 }) => {
+  console.log(email, experience)
+  
 
   // gets the student from db and initializes and sends contact info to store
   useEffect(() => {
@@ -37,7 +39,7 @@ export const ContactDetailsUpdateForm = ({
       phone: event.target.phone.value,
       email: event.target.email.value,
       experience: event.target.experience.value,
-      no_english: event.target.no_english.checked,
+      canTeachEnglish: event.target.canTeachEnglish.checked,
       apprentice: event.target.apprentice.checked
     }
     // gives error if email is not in valid format
@@ -87,9 +89,9 @@ export const ContactDetailsUpdateForm = ({
 
             <Form.Check
               type='checkbox'
-              name='no_english'
-              checked={no_english}
-              value={no_english}
+              name='canTeachEnglish'
+              checked={canTeachEnglish}
+              value={canTeachEnglish}
               label="I can teach in English"
               onChange={(e) => updateLanguage(e.target.checked)}
             />
@@ -117,7 +119,7 @@ const mapStateToProps = (state) => {
     phone: state.students.phone,
     email: state.students.email,
     experience: state.students.experience,
-    no_english: state.students.no_english,
+    canTeachEnglish: state.students.canTeachEnglish,
     apprentice: state.students.apprentice
   }
 }

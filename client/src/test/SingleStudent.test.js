@@ -12,7 +12,7 @@ describe('<SingleStudent/>', () => {
         experience: 'Testasin kisätyötä Ohpessa syksyllä 2018',
         first_names: 'Timo *Teppo Tellervo',
         last_name: 'Testaaja',
-        no_english: true,
+        canTeachEnglish: true,
         phone: '0404444444',
         student_id: 2,
         student_number: '012345678'

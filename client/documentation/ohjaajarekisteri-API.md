@@ -256,7 +256,7 @@ Data: [
         "student_number": "012345678",
         "first_names": "Timo *Teppo Tellervo",
         "last_name": "Testaaja",
-        "no_english": false,
+        "canTeachEnglish": false,
         "experience": "",
         "phone": "213412341",
         "email": "tite@helsinki.fi",
@@ -351,7 +351,7 @@ Data: [
     "experience": "",
     "first_names": "Timo *Teppo Tellervo",
     "last_name": "Testaaja",
-    "no_english": false,
+    "canTeachEnglish": false,
     "phone": "213412341",
     "student_id": 1,
     "student_number": "012345678",
@@ -416,7 +416,7 @@ Data: [ // returns all applicants including the modifications made to some
     "experience": "",
     "first_names": "Timo *Teppo Tellervo",
     "last_name": "Testaaja",
-    "no_english": false,
+    "canTeachEnglish": false,
     "phone": "213412341",
     "student_id": 1,
     "student_number": "012345678",
@@ -497,7 +497,7 @@ Data: [
     "student_number": "012345678",
     "first_names": "Timo *Teppo Tellervo",
     "last_name": "Testaaja",
-    "no_english": false,
+    "canTeachEnglish": false,
     "experience": "",
     "phone": "213412341",
     "email": "tite@helsinki.fi",
@@ -540,7 +540,7 @@ Data: {
     "student_number": "012345678",
     "first_names": "Timo *Teppo Tellervo",
     "last_name": "Testaaja",
-    "no_english": false,
+    "canTeachEnglish": false,
     "experience": "",
     "phone": "213412341",
     "email": "tite@helsinki.fi",
@@ -581,7 +581,7 @@ Data: {
     "student_number": "012345678",
     "first_names": "Timo *Teppo Tellervo",
     "last_name": "Testaaja",
-    "no_english": false,
+    "canTeachEnglish": false,
     "experience": "",
     "phone": "213412341",
     "email": "tite@helsinki.fi",
@@ -741,7 +741,7 @@ body: {
   "email": "test@helsinki.fi", 
   "phone": "123456789", 
   "experience": "This is what I have done so far...", 
-  "no_english": false
+  "canTeachEnglish": false
 }
 ```
 

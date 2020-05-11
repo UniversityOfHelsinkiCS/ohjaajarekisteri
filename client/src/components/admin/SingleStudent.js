@@ -39,7 +39,7 @@ export const SingleStudent = ({ studentId, getSingleStudent, getSingleStudentCou
               <td>{student.email}</td>
               <td>{student.phone}</td>
               <td width='50'>
-                {student.no_english ?
+                {student.canTeachEnglish ?
                   <img
                     src={require('../../Images/finnishFlag.png')}
                     width='30'

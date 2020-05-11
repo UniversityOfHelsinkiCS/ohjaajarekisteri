@@ -180,7 +180,7 @@ export const SingleCourse = ({
               <td>{student.first_names}</td>
               <td>{student.last_name}</td>
               <td width='50'>
-                {student.no_english ?
+                {student.canTeachEnglish ?
                   <img
                     src={require('../../Images/finnishFlag.png')}
                     width='30'

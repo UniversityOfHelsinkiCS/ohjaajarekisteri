@@ -184,7 +184,7 @@ export const Summary = ({
                           <td className="studentName centerColumn"> {s.first_names} {s.last_name}</td>
                           <td width='75'> {s.Application.accepted ? <Badge variant="success">Accepted</Badge> : <Badge variant="secondary">Pending</Badge>}</td>
                           <td width='50'>
-                            {s.no_english ?
+                            {s.canTeachEnglish ?
                               <img
                                 src={require('../../Images/finnishFlag.png')}
                                 width='30'

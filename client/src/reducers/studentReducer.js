@@ -5,7 +5,7 @@ const initialState = {
   phone: '',
   email: '',
   experience: '',
-  no_english: false,
+  canTeachEnglish: false,
   apprentice: false,
   contactInformation: {
     first_names: '',
@@ -60,7 +60,7 @@ const studentReducer = (state = initialState, action) => {
       phone: action.data.phone,
       email: action.data.email,
       experience: action.data.experience,
-      no_english: action.data.no_english,
+      canTeachEnglish: action.data.canTeachEnglish,
       apprentice: action.data.apprentice
     }
   }
@@ -86,7 +86,7 @@ const studentReducer = (state = initialState, action) => {
   case 'UPDATE_LANGUAGE': {
     return {
       ...state,
-      no_english: action.data
+      canTeachEnglish: action.data
     }
   }
   case 'UPDATE_APPRENTICE': {

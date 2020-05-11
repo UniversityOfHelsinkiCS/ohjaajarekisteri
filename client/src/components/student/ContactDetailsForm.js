@@ -21,7 +21,7 @@ export const ContactDetailsForm = ({
     const formContent = {
       phone: event.target.phonenumber.value,
       experience: event.target.experience.value,
-      no_english: event.target.no_english.checked,
+      canTeachEnglish: event.target.canTeachEnglish.checked,
       apprentice: event.target.apprentice.checked
     }
     
@@ -54,7 +54,7 @@ export const ContactDetailsForm = ({
 
           <Form.Check
             type='checkbox'
-            name='no_english'
+            name='canTeachEnglish'
             label="I can teach in English"
             onChange={(e) => updateLanguage(e.target.checked)}
           />
