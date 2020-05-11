@@ -21,7 +21,7 @@ export const CourseApplicationList = (props) => {
   const handleSubmit = () => {
     const coursesToApplyTo = props.courses.filter(c => c.checked).map(c => c.course_id)
     if (coursesToApplyTo.length !== 0) {
-      props.sendApplication(props.loggedUser.user.user_id, coursesToApplyTo)
+      props.sendApplication(props.loggedUser.user.uid, coursesToApplyTo)
       props.history.push('/applications')
     }
   }

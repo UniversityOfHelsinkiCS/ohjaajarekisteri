@@ -14,7 +14,7 @@ export const StudentCourseList = ({ loggedUser, courses, id, getStudentCourses, 
   const removeApply = (id) => {
     return () => {
       if (window.confirm('Do you want to delete this course from your application?')) {
-        deleteAppliedCourse(id, loggedUser.user.user_id)
+        deleteAppliedCourse(id, loggedUser.user.uid)
       }
     }
   }

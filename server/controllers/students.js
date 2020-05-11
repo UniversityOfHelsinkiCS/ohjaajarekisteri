@@ -99,7 +99,7 @@ studentsRouter.delete('/:id/courses/:course_id', checkUser, async (req, res) => 
     // get current user from db
     const user = await db.User.findOne({
       where: {
-        user_id: req.params.id
+        uid: req.params.id
       }
     })
 
