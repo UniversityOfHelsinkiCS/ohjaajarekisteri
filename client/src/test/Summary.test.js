@@ -22,13 +22,13 @@ describe('<Summary />', () => {
         createdAt: '2019-03-28T15:50:42.184Z',
         learningopportunity_id: 'CSM12104',
         periods: [4],
-        students: [{
+        users: [{
           Application: {
             accepted: false,
             course_id: 20,
             createdAt: '2019-04-05T03:46:28.197Z',
             groups: 0,
-            student_id: 2,
+            uid: 2,
             updatedAt: '2019-04-05T03:46:28.197Z'
           },
 
@@ -39,7 +39,7 @@ describe('<Summary />', () => {
           last_name: 'Testaaja',
           canTeachEnglish: true,
           phone: '040122333',
-          student_id: 2,
+          uid: 2,
           student_number: '012345678',
           updatedAt: '2019-04-05T04:28:17.393Z'
         }],
