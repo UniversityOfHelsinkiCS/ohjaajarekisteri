@@ -37,7 +37,6 @@ describe('<ContactDetailsForm />', () => {
     let detailsDiv = detailsComponent.find('.studentForm')
     expect(detailsDiv.text()).toContain('Contact details')
     expect(detailsDiv.text()).toContain('Phone')
-    expect(detailsDiv.text()).toContain('Email')
   })
 
 })

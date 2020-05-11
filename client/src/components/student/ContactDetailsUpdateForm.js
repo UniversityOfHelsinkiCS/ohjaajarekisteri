@@ -90,7 +90,7 @@ export const ContactDetailsUpdateForm = ({
               name='no_english'
               checked={no_english}
               value={no_english}
-              label="I don't want to teach in English"
+              label="I can teach in English"
               onChange={(e) => updateLanguage(e.target.checked)}
             />
 

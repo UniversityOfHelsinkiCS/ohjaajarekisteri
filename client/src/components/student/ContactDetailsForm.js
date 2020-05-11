@@ -4,7 +4,6 @@ import { updateLoggedUser } from '../../reducers/actionCreators/loginActions'
 import { notify } from '../../reducers/actionCreators/notificationActions'
 import { Form, Button } from 'react-bootstrap'
 import studentActions from '../../reducers/actionCreators/studentActions'
-import { emailValid } from '../../utils/validations'
 import GDPRInfo from './GDPRInfo'
 
 export const ContactDetailsForm = ({
@@ -44,7 +43,6 @@ export const ContactDetailsForm = ({
             name='phonenumber'
             onChange={(e) => updatePhone(e.target.value)}
           />
-          <Form.Label>Email: </Form.Label>
           <Form.Label>Assistance/teaching experience (max length 1000 characters):</Form.Label>
           <Form.Control
             as='textarea'
@@ -57,7 +55,7 @@ export const ContactDetailsForm = ({
           <Form.Check
             type='checkbox'
             name='no_english'
-            label="I don't want to teach in English"
+            label="I can teach in English"
             onChange={(e) => updateLanguage(e.target.checked)}
           />
 
