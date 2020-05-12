@@ -5,9 +5,9 @@ import { Button } from 'react-bootstrap'
 const Course = ({ course, setHidden }) => {
   let acceptedStudentsAmount = 0
   let applicants = 0
-  if (course.students) {
-    applicants = course.students.length
-    course.students.forEach(student => {
+  if (course.users) {
+    applicants = course.users.length
+    course.users.forEach(student => {
       if (student.Application.accepted) acceptedStudentsAmount++
     })
   }

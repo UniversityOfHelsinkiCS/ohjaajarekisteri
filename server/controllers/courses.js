@@ -107,6 +107,7 @@ coursesRouter.get('/:id/students', checkAdmin, async (req, res) => {
 // Updates application status and group numbers of all applicants on a course
 coursesRouter.post('/:id/students/', checkAdmin, async (req, res) => {
   try {
+    console.log('id/students', req.body)
     const course = await db.Course
       .findByPk(req.params.id)
     let users = await course.getUsers()
