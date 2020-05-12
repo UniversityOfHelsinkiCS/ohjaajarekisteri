@@ -26,7 +26,7 @@ export const SingleCourse = ({
       .filter(a => a.accepted !== a.accepted_checked || a.groups !== a.groups_textbox)
       .map(a => {
         return {
-          student_id: a.student_id,
+          uid: a.uid,
           accepted: a.accepted !== a.accepted_checked ? a.accepted_checked : a.accepted,
           groups: a.groups !== a.groups_textbox ? a.groups_textbox : a.groups
         }
@@ -59,21 +59,21 @@ export const SingleCourse = ({
   const checkAllEmailBoxes = (e) => {
     e.preventDefault()
     applicants.forEach(applicant => {
-      setEmail(applicant.student_id, applicant.accepted_checked)
+      setEmail(applicant.uid, applicant.accepted_checked)
     })
   }
 
   const checkAllAcceptedBoxes = (e) => {
     e.preventDefault()
     applicants.forEach(applicant => {
-      setStudentAccepted(applicant.student_id, true)
+      setStudentAccepted(applicant.uid, true)
     })
   }
 
   const checkNotAcceptedEmailBoxes = (e) => {
     e.preventDefault()
     applicants.forEach(applicant => {
-      setEmail(applicant.student_id, !applicant.accepted_checked)
+      setEmail(applicant.uid, !applicant.accepted_checked)
     })
   }
 
@@ -202,7 +202,7 @@ export const SingleCourse = ({
                 <input
                   type='number'
                   id={student.student_number}
-                  onChange={handleGroupsChange(student.student_id)}
+                  onChange={handleGroupsChange(student.uid)}
                   defaultValue={student.groups_textbox}
                   style={{ width: 50 }}
                   min='0'
@@ -213,7 +213,7 @@ export const SingleCourse = ({
                   className='accepted listCheckbox'
                   name={student.student_number}
                   checked={student.accepted_checked}
-                  id={student.student_id}
+                  id={student.uid}
                   onChange={handleAcceptedChange}
                 />
               </td>
@@ -222,7 +222,7 @@ export const SingleCourse = ({
                   className='emailTo listCheckbox'
                   name={student.student_number}
                   checked={student.email_to_checked}
-                  id={student.student_id}
+                  id={student.uid}
                   onChange={handleEmailToChange}
                 />
               </td>
