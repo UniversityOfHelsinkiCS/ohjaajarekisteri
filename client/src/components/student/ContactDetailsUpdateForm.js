@@ -22,10 +22,7 @@ export const ContactDetailsUpdateForm = ({
   id,
   getContactInformation,
   defaultInput
-}) => {
-  console.log(email, experience)
-  
-
+}) => {  
   // gets the student from db and initializes and sends contact info to store
   useEffect(() => {
     getContactInformation(id)
@@ -52,6 +49,8 @@ export const ContactDetailsUpdateForm = ({
     }
   }
 
+  experience = experience || ''
+
   return (
     <div>
       <div className='contactDetailsUpdateForm'>
@@ -65,7 +64,7 @@ export const ContactDetailsUpdateForm = ({
             <Form.Control
               type='text'
               name='phone'
-              value={phone}
+              value={phone || ''}
               onChange={(e) => updatePhone(e.target.value)}
             />
 

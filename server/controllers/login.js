@@ -31,6 +31,7 @@ loginRouter.post('/', async (req, res) => {
         }
       })
     } else {
+      console.log(mail)
       const savedUser = await db.User
         .create({
           uid,
@@ -40,6 +41,7 @@ loginRouter.post('/', async (req, res) => {
           email: mail,
         })
       const role = savedUser.admin ? 'admin' : 'student'
+      console.log(savedUser.email)
 
       const token = jwt.sign({ id: savedUser.uid, role }, config.secret, { expiresIn: '10h' })
       return res.status(200).json({

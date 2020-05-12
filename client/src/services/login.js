@@ -10,17 +10,18 @@ const login = async (role) => {
       schacPersonalUniqueCode: 'urn:schac:personalUniqueCode:int:studentID:helsinki.fi:014339923',
       givenName: 'UusiHenkilö',
       sn: 'Toska',
-      email: 'grp-toska+ohrekstudent@helsinki.fi',
+      mail: 'grp-toska+ohrekstudent@helsinki.fi',
     }
 
     const admin = {
-      username: 'rekAdmin',
       uid: 'VToska',
       givenName: 'VanhaHenkilö',
       sn: 'Ex-Toskalainen',
       employeeNumber: '123161',
-      email: 'grp-toska+ohrekadmin@helsinki.fi',
+      mail: 'grp-toska+ohrekadmin@helsinki.fi',
     }
+
+    console.log(student)
 
     if (!role) {
       const response = await axios.post(baseUrl, null)
