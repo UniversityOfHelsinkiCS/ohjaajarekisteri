@@ -78,7 +78,7 @@ const App = (props) => {
 
               <PrivateRoute
                 exact path="/login"
-                redirectPath="/"
+                redirectPath="/apply"
                 condition={loggedUser === null}
                 render={() => <LoginForm />}
               />

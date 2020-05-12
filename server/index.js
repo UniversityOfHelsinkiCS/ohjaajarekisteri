@@ -34,17 +34,17 @@ const loginRouter = require('./controllers/login')
 const tokenCheckRouter = require('./controllers/tokenCheck')
 const studyProgramUrlsRouter = require('./controllers/studyProgramUrls')
 
+// Serve frontend in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('build'))
+}
+
 const apiUrl = '/api'
 app.use(`${apiUrl}/courses`, coursesRouter)
 app.use(`${apiUrl}/students`, studentsRouter)
 app.use(`${apiUrl}/login`, loginRouter)
 app.use(`${apiUrl}/tokenCheck`, tokenCheckRouter)
 app.use(`${apiUrl}/studyProgramUrls`, studyProgramUrlsRouter)
-
-// Serve frontend in production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('build'))
-}
 
 //Updates courses on database every day at one second before midnight
 if (process.env.NODE_ENV !== 'test') {
