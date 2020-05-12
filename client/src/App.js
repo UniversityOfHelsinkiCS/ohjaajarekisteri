@@ -37,7 +37,6 @@ const App = (props) => {
       loggedUser.user.email
     )
   const isAdmin = loggedUser && loggedUser.user.role === 'admin'
-
   return (
     <div>
       { /* eslint-disable */}

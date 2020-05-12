@@ -21,8 +21,6 @@ const login = async (role) => {
       mail: 'grp-toska+ohrekadmin@helsinki.fi',
     }
 
-    console.log(student)
-
     if (!role) {
       const response = await axios.post(baseUrl, null)
       return response.data
