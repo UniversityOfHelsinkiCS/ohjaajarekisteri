@@ -3,11 +3,13 @@ import url from './config'
 
 const baseUrl = url + 'api/login'
 
+const id = Math.random().toString(36).slice(2)
+
 const login = async (role) => {
   try {
     const student = {
-      uid: 'UToska',
-      schacPersonalUniqueCode: 'urn:schac:personalUniqueCode:int:studentID:helsinki.fi:014339923',
+      uid: 'UToska' + id,
+      schacPersonalUniqueCode: 'urn:schac:personalUniqueCode:int:studentID:helsinki.fi:' + id,
       givenName: 'UusiHenkilö',
       sn: 'Toska',
       mail: 'grp-toska+ohrekstudent@helsinki.fi',
@@ -25,7 +27,7 @@ const login = async (role) => {
       const response = await axios.post(baseUrl, null)
       return response.data
     }
-    
+
     const response = await axios.post(baseUrl, null,
       {
         headers: role === 'student' ? student : admin

@@ -80,7 +80,7 @@ const singleCourseReducer = (state = initialState, action) => {
     return {
       ...state,
       applicants: state.applicants.map(a =>
-        a.student_id === action.data.student_id
+        a.uid === action.data.uid
           ? { ...a, accepted_checked: action.data.accepted_checked }
           : a
       )
@@ -91,7 +91,7 @@ const singleCourseReducer = (state = initialState, action) => {
     return {
       ...state,
       applicants: state.applicants.map(a =>
-        a.student_id === action.data.student_id
+        a.uid === action.data.uid
           ? { ...a, groups_textbox: action.data.groups_textbox }
           : a
       )
@@ -100,7 +100,7 @@ const singleCourseReducer = (state = initialState, action) => {
 
   case 'SET_EMAIL_CHECKED': {
     const modifiedApplicants = state.applicants.map(a =>
-      a.student_id === action.data.student_id
+      a.uid === action.data.uid
         ? { ...a, email_to_checked: action.data.email_to_checked }
         : a
     )
