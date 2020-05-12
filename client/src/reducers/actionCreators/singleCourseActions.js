@@ -25,24 +25,24 @@ export const initializeSingleCourse = (id) => {
   }
 }
 
-export const setStudentAccepted = (student_id, accepted_checked) => {
+export const setStudentAccepted = (uid, accepted_checked) => {
   return async (dispatch) => {
     dispatch({
       type: 'SET_STUDENT_ACCEPTED_STATE',
       data: {
-        student_id,
+        uid,
         accepted_checked
       }
     })
   }
 }
 
-export const setStudentGroups = (student_id, groups_textbox) => {
+export const setStudentGroups = (uid, groups_textbox) => {
   return async (dispatch) => {
     dispatch({
       type: 'SET_STUDENT_GROUPS_STATE',
       data: {
-        student_id,
+        uid,
         groups_textbox
       }
     })
@@ -88,12 +88,12 @@ export const sendAcceptedModified = (course_id, modifiedApplicants) => {
   }
 }
 
-export const setEmail = (student_id, email_to_checked) => {
+export const setEmail = (uid, email_to_checked) => {
   return async (dispatch) => {
     dispatch({
       type: 'SET_EMAIL_CHECKED',
       data: {
-        student_id,
+        uid,
         email_to_checked
       }
     })
