@@ -6,7 +6,7 @@ const { checkUser, checkAdmin } = require('../utils/middleware/checkRoute')
 //Get request that returns all students as JSON
 studentsRouter.get('/', checkAdmin, async (req, res) => {
   try {
-    let students = await db.User.findAll({ where: { admin: false }})
+    let students = await db.User.findAll({ where: { admin: false } })
     res.status(200).json(students)
   } catch (exception) {
     console.log(exception.message)
@@ -139,7 +139,7 @@ studentsRouter.put('/:id', checkUser, async (req, res) => {
     let user = await db.User.findOne({ where: { uid: req.params.id } })
     const body = req.body
 
-    await user.update({ phone: body.phone, experience: body.experience, can_teach_in_english: !body.canTeachEnglish, apprentice: body.apprentice })
+    await user.update({ phone: body.phone, experience: body.experience, can_teach_in_english: body.canTeachEnglish, apprentice: body.apprentice })
     res.status(200).end()
   } catch (error) {
     console.log(error.message)

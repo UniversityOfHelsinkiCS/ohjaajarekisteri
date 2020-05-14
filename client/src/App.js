@@ -28,8 +28,7 @@ const App = (props) => {
   }, [])
 
   const { loggedUser } = props
-  console.log(loggedUser)
-  
+
   const hasContactDetails =
     (
       loggedUser
@@ -38,7 +37,7 @@ const App = (props) => {
       &&
       loggedUser.user.hasFilledExperienceField
     )
-    
+
   const isAdmin = loggedUser && loggedUser.user.role === 'admin'
 
   return (

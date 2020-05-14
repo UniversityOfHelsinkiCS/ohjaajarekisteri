@@ -21,7 +21,7 @@ export const ContactDetailsUpdateForm = ({
   id,
   getContactInformation,
   defaultInput
-}) => {  
+}) => {
   // gets the student from db and initializes and sends contact info to store
   useEffect(() => {
     getContactInformation(id)
@@ -48,6 +48,8 @@ export const ContactDetailsUpdateForm = ({
   }
 
   experience = experience || ''
+
+  console.log(canTeachEnglish, apprentice)
 
   return (
     <div>

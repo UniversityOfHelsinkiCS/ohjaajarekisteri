@@ -60,7 +60,7 @@ const studentReducer = (state = initialState, action) => {
       phone: action.data.phone,
       email: action.data.email,
       experience: action.data.experience,
-      canTeachEnglish: action.data.canTeachEnglish,
+      canTeachEnglish: action.data.can_teach_in_english,
       apprentice: action.data.apprentice
     }
   }
