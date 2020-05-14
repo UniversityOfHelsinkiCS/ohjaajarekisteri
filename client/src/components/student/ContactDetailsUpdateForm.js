@@ -49,8 +49,6 @@ export const ContactDetailsUpdateForm = ({
 
   experience = experience || ''
 
-  console.log(canTeachEnglish, apprentice)
-
   return (
     <div>
       <div className='contactDetailsUpdateForm'>
