@@ -40,7 +40,7 @@ const App = (props) => {
   return (
     <div>
       { /* eslint-disable */}
-      <Router basename={process.env.PUBLIC_URL}>
+      <Router basename={process.env.REACT_APP_PUBLIC_URL}>
         { /* eslint-enable */}
         <React.Fragment>
 

@@ -1,5 +1,8 @@
 FROM node:10 as builder
 
+ARG BASE_URL
+ENV REACT_APP_PUBLIC_URL=$BASE_URL
+
 WORKDIR /front
 
 COPY ./client/package.json ./client/package-lock.json /front/

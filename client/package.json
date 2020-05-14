@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "http://backend:8001",
-  "homepage": "https://study.cs.helsinki.fi/ohjaajarekisteri",
   "dependencies": {
     "axios": "^0.18.1",
     "json-server": "^0.16.1",

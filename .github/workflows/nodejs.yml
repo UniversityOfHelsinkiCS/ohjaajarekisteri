@@ -32,7 +32,10 @@ jobs:
         
       - name: Publish to DockerHub
         uses: elgohr/Publish-Docker-Github-Action@2.14
+        env:
+          BASE_URL: /ohjaajarekisteri
         with:
           name: toska/ohjaajarekisteri
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+          buildargs: BASE_URL
