@@ -9,7 +9,7 @@ COPY package.json package-lock.json /app/
 RUN npm install
 
 # Launch application
-CMD npm run watch
+CMD ["npm", "run", "watch"]
 
 # Expose container's port 8080 to the outside
 EXPOSE 8080

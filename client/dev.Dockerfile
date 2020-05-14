@@ -9,7 +9,7 @@ COPY package.json package-lock.json /app/
 RUN npm install
 
 # build
-CMD npm start
+CMD ["npm", "start"]
 
 # specify which port to expose
 EXPOSE 3000

@@ -25,7 +25,7 @@ COPY ./server /app
 COPY --from=builder /front/build /app/build
 
 # Launch application
-CMD node index.js
+CMD ["node", "index.js"]
 
 # Expose container's port 8080 to the outside
 EXPOSE 8080
