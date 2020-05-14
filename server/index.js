@@ -49,7 +49,6 @@ if (process.env.NODE_ENV === 'production') {
 
   app.use(express.static(DIST_PATH))
   app.get('*', (_, res) => res.sendFile(INDEX_PATH))
-
 }
 
 //Updates courses on database every day at one second before midnight

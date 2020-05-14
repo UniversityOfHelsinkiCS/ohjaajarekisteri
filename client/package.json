@@ -2,6 +2,7 @@
   "name": "tiedosto",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://toska-staging.cs.helsinki.fi/ohjaajarekisteri",
   "proxy": "http://backend:8001",
   "dependencies": {
     "axios": "^0.18.1",
