@@ -28,15 +28,19 @@ const App = (props) => {
   }, [])
 
   const { loggedUser } = props
+  console.log(loggedUser)
+  
   const hasContactDetails =
     (
       loggedUser
       &&
       loggedUser.user.role === 'student'
       &&
-      loggedUser.user.email
+      loggedUser.user.hasFilledExperienceField
     )
+    
   const isAdmin = loggedUser && loggedUser.user.role === 'admin'
+
   return (
     <div>
       { /* eslint-disable */}

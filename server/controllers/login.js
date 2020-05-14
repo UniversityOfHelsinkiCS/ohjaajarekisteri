@@ -22,16 +22,18 @@ loginRouter.post('/', async (req, res) => {
       // user already in database, no need to add
       const role = user.admin ? 'admin' : 'student'
       const token = jwt.sign({ id: user.uid, role }, config.secret, { expiresIn: '10h' })
+      console.log('USER', user)
+      
       return res.status(200).json({
         token,
         user: {
           uid: user.uid,
+          email: user.email,
           role,
-          email: user.email ? true : false // if the student has an email address added
+          hasFilledExperienceField: !!user.experience
         }
       })
     } else {
-      console.log(mail)
       const savedUser = await db.User
         .create({
           uid,
@@ -39,17 +41,18 @@ loginRouter.post('/', async (req, res) => {
           first_names: givenname,
           last_name: sn,
           email: mail,
+          experience: ''
         })
       const role = savedUser.admin ? 'admin' : 'student'
-      console.log(savedUser.email)
 
       const token = jwt.sign({ id: savedUser.uid, role }, config.secret, { expiresIn: '10h' })
       return res.status(200).json({
         token,
         user: {
           uid: savedUser.uid,
+          email: mail,
           role,
-          email: savedUser.email ? true : false // if the student has an email address added
+          hasFilledExperienceField: !!savedUser.experience
         }
       })
     }

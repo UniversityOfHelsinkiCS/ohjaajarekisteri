@@ -8,7 +8,8 @@ const id = Math.random().toString(36).slice(2)
 const login = async (role) => {
   try {
     const student = {
-      uid: 'UToska' + id,
+//      uid: 'UToska' + id,
+      uid: 'UToska',
       schacPersonalUniqueCode: 'urn:schac:personalUniqueCode:int:studentID:helsinki.fi:' + id,
       givenName: 'UusiHenkilö',
       sn: 'Toska',

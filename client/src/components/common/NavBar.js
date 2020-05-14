@@ -37,26 +37,26 @@ export const NavBar = ({ loggedUser, logout }) => {
             </Nav.Link>
 
             <Nav.Link href='#' as='span'>
-              {loggedUser && loggedUser.user.role === 'student' && loggedUser.user.email
+              {loggedUser && loggedUser.user.role === 'student' && loggedUser.user.hasFilledExperienceField
                 ? <Link to='/apply'>Apply</Link>
                 : <em></em>} &nbsp;
             </Nav.Link>
 
             <Nav.Link href='#' as='span'>
-              {loggedUser && loggedUser.user.role === 'student' && loggedUser.user.email
+              {loggedUser && loggedUser.user.role === 'student' && loggedUser.user.hasFilledExperienceField
                 ? <Link to='/applications'>Applications</Link>
                 : <em></em>} &nbsp;
             </Nav.Link>
           </Nav>
 
           <Nav.Link href='#' as='span'>
-            {loggedUser && loggedUser.user.role === 'student' && loggedUser.user.email
+            {loggedUser && loggedUser.user.role === 'student' && loggedUser.user.hasFilledExperienceField
               ? <Link to='/privacy'>Privacy Statement</Link>
               : <em></em>} &nbsp;
           </Nav.Link>
 
           <Nav.Link href='#' as='span'>
-            {loggedUser && loggedUser.user.role === 'student' && loggedUser.user.email
+            {loggedUser && loggedUser.user.role === 'student' && loggedUser.user.hasFilledExperienceField
               ? <Link to='/update-info'>Profile</Link>
               : <em></em>} &nbsp;
           </Nav.Link>
@@ -69,7 +69,7 @@ export const NavBar = ({ loggedUser, logout }) => {
                 variant='outline-secondary'
                 type='button'
               >
-                Logout
+                Logout {loggedUser.user.email}
               </Button>
               :
               <em></em>} &nbsp;

@@ -4,7 +4,6 @@ import { updateLoggedUser } from '../../reducers/actionCreators/loginActions'
 import studentActions from '../../reducers/actionCreators/studentActions'
 import { notify } from '../../reducers/actionCreators/notificationActions'
 import { Form, Button } from 'react-bootstrap'
-import { emailValid } from '../../utils/validations'
 
 export const ContactDetailsUpdateForm = ({
   phone,
@@ -34,14 +33,13 @@ export const ContactDetailsUpdateForm = ({
 
     const input = {
       phone: event.target.phone.value,
-      email: event.target.email.value,
       experience: event.target.experience.value,
       canTeachEnglish: event.target.canTeachEnglish.checked,
       apprentice: event.target.apprentice.checked
     }
-    // gives error if email is not in valid format
-    if (!emailValid(input.email)) {
-      notify('Please check your email', 5)
+    // gives error if experience is not defined
+    if (input.experience.length < 20) {
+      notify('Please describe your teaching experience (20 characters minumum)', 5)
     } else if (input.experience.length > 1000) {
       notify('Experience maximum length is 1000 characters', 5)
     } else {
@@ -66,14 +64,6 @@ export const ContactDetailsUpdateForm = ({
               name='phone'
               value={phone || ''}
               onChange={(e) => updatePhone(e.target.value)}
-            />
-
-            <Form.Label>Email: </Form.Label>
-            <Form.Control
-              type='email'
-              name='email'
-              value={email}
-              onChange={(e) => updateEmail(e.target.value)}
             />
 
             <Form.Label>Assistance/teaching experience (remaining characters {1000 - experience.length}):</Form.Label>

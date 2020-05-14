@@ -25,12 +25,15 @@ export const ContactDetailsForm = ({
       apprentice: event.target.apprentice.checked
     }
     
-    if (formContent.experience.length > 1000) {
+    if (formContent.experience.length < 20) {
+      notify('Please describe your teaching experience (20 characters minumum)', 5)
+    } else if (formContent.experience.length > 1000) {
       notify('Experience maximum length is 1000 characters', 5)
     } else {
       updateLoggedUser(formContent, id)
     }
   }
+
   return (
     <div className='studentForm'>
 

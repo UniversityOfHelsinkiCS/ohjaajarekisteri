@@ -40,7 +40,7 @@ export const updateLoggedUser = (content, id) => {
       }, 3000)
     } else {
       let loggedUser = JSON.parse(window.localStorage.getItem('loggedInUser'))
-      loggedUser.user.email = true
+      loggedUser.user.hasFilledExperienceField = true
       window.localStorage.setItem('loggedInUser', JSON.stringify(loggedUser))
       dispatch({
         type: 'UPDATE_LOGGED_USER',

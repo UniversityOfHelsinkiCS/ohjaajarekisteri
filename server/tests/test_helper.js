@@ -10,6 +10,7 @@ const initialStudents = [
     last_name: 'Pouta',
     phone: '0401234567',
     email: 'juhani.pouta@gmail.com',
+    experience: ''
   },
   {
     uid: 'akus',
@@ -18,6 +19,7 @@ const initialStudents = [
     last_name: 'Kustaa',
     phone: '0401234598',
     email: 'arska.kustaa@gmail.com',
+    experience: ''
   },
   {
     uid: 'tvirt',
@@ -26,6 +28,7 @@ const initialStudents = [
     last_name: 'Virtanen',
     phone: '0405674567',
     email: 'tomi.virtanen@gmail.com',
+    experience: ''
   }
 ]
 
@@ -35,7 +38,8 @@ const initialAdmin = {
   last_name: 'Ylijäbä',
   phone: '112',
   email: 'haba.virtanen@gmail.com',
-  admin: true
+  admin: true,
+  experience: ''
 }
 
 const initialCourses = [

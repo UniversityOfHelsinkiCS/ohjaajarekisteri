@@ -28,7 +28,7 @@ describe('/api/login', async () => {
         schacPersonalUniqueCode: 'urn:schac:personalUniqueCode:int:studentID:helsinki.fi:014339923',
         givenName: 'UusiHenkilö',
         sn: 'Toska',
-        email: 'grp-toska+ohrekstudent@helsinki.fi',
+        mail: 'grp-toska+ohrekstudent@helsinki.fi'
       })
       .expect(200)
       .expect('Content-Type', /application\/json/)
