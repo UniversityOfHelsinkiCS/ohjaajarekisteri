@@ -84,10 +84,6 @@ export const login = (role) => {
         type: 'LOGIN_SUCCESFUL',
         data: { ...response }
       })
-      dispatch({
-        type: 'NOTIFY',
-        data: 'Logged in succesfully!'
-      })
 
       setTimeout(() => {
         dispatch({
