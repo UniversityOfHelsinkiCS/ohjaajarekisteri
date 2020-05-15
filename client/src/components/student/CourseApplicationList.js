@@ -106,13 +106,6 @@ export const CourseApplicationList = (props) => {
           })}
       </div>
 
-      <div style={{ float: 'right' }}>
-        <div>&nbsp;</div>
-
-        <Button className="button buttonApply" onClick={handleSubmit} type="submit" >
-          Apply
-        </Button>
-      </div>
 
       <div style={{ float: 'right', paddingRight: 15 }}>
         <div style={{ color: '#6c757d' }}> Filter:</div>
@@ -131,7 +124,7 @@ export const CourseApplicationList = (props) => {
             <th className='centerColumn wrapSmallCell'>Starting period</th>
             <th className='centerColumn'>From</th>
             <th className='centerColumn'>To</th>
-            <th className='centerColumn'>Apply</th>
+            <th className='centerColumn'>Choose</th>
           </tr>
         </thead>
         <tbody>
@@ -163,6 +156,13 @@ export const CourseApplicationList = (props) => {
           }
         </tbody>
       </Table>
+      <div style={{ float: 'right' }}>
+        <div>&nbsp;</div>
+
+        <Button className="button buttonApply" onClick={handleSubmit} type="submit" >
+          Apply
+        </Button>
+      </div>
     </div>
   )
 }
