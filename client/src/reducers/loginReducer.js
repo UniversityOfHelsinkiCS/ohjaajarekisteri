@@ -34,7 +34,8 @@ const loginReducer = (state = initialState, action) => {
   case 'LOGOUT': {
     return {
       ...state,
-      loggedUser: null
+      loggedUser: null,
+      logoutUrl: action.data
     }
   }
 

@@ -27,7 +27,9 @@ const App = (props) => {
     props.initLoggedUser()
   }, [])
 
-  const { loggedUser } = props
+  const { loggedUser, logoutUrl } = props
+
+  console.log('LOGOUT URL', logoutUrl)
 
   const hasContactDetails =
     (
@@ -40,11 +42,16 @@ const App = (props) => {
 
   const isAdmin = loggedUser && loggedUser.user.role === 'admin'
 
+  if (logoutUrl) {
+    window.location.href = logoutUrl
+  }
+
   return (
     <div>
       { /* eslint-disable */}
       <Router basename={process.env.PUBLIC_URL}>
         { /* eslint-enable */}
+
         <React.Fragment>
 
           <NavBar
@@ -137,7 +144,8 @@ const App = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    loggedUser: state.loggedUser.loggedUser
+    loggedUser: state.loggedUser.loggedUser,
+    logoutUrl: state.loggedUser.logoutUrl
   }
 }
 

@@ -2,6 +2,7 @@ import courseService from '../../services/courses'
 import studentService from '../../services/students'
 import adminService from '../../services/admins'
 import loginService from '../../services/login'
+import logoutService from '../../services/logout'
 import tokenCheckService from '../../services/tokenCheck'
 
 
@@ -97,12 +98,14 @@ export const login = (role) => {
 
 export const logout = () => {
   return async (dispatch) => {
+    const logoutUrl = await logoutService.logout()
     window.localStorage.removeItem('loggedInUser')
     await studentService.setToken(null)
     await courseService.setToken(null)
     await adminService.setToken(null)
     dispatch({
-      type: 'LOGOUT'
+      type: 'LOGOUT',
+      data: logoutUrl
     })
   }
 }
