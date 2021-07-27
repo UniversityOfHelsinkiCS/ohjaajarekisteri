@@ -10,7 +10,7 @@ const login = async (role) => {
     const student = {
 //      uid: 'UToska' + id,
       uid: 'UToska',
-      schacPersonalUniqueCode: 'urn:schac:personalUniqueCode:int:studentID:helsinki.fi:' + id,
+      hypersonid: id,
       givenName: 'UusiHenkilö',
       sn: 'Toska',
       mail: 'grp-toska+ohrekstudent@helsinki.fi',

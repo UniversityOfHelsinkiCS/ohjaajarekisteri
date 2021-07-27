@@ -25,7 +25,7 @@ describe('/api/login', async () => {
       .post('/api/login')
       .set({
         uid: 'UToska',
-        schacPersonalUniqueCode: 'urn:schac:personalUniqueCode:int:studentID:helsinki.fi:014339923',
+        hypersonid: '014339923',
         givenName: 'UusiHenkilö',
         sn: 'Toska',
         mail: 'grp-toska+ohrekstudent@helsinki.fi'

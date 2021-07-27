@@ -10,7 +10,7 @@ loginRouter.post('/', async (req, res) => {
   try {
     const { 
       uid,
-      schacpersonaluniquecode,
+      hypersonid,
       givenname,
       sn,
       mail
@@ -37,7 +37,7 @@ loginRouter.post('/', async (req, res) => {
       const savedUser = await db.User
         .create({
           uid,
-          student_number: schacpersonaluniquecode ? schacpersonaluniquecode.split(':')[6] : null,
+          student_number: hypersonid ? hypersonid : null,
           first_names: givenname,
           last_name: sn,
           email: mail,
