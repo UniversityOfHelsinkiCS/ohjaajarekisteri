@@ -31,7 +31,7 @@ jobs:
         run: npm run test:ci
         
       - name: Publish to DockerHub
-        uses: elgohr/Publish-Docker-Github-Action@2.14
+        uses: elgohr/Publish-Docker-Github-Action@v5
         env:
           BASE_URL: /ohjaajarekisteri
         with:
